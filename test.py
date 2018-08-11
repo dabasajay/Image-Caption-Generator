@@ -22,19 +22,26 @@ def extract_features(filename):
 	return feature
 
 # load the tokenizer
-tokenizer_path = 'tokenizer.pkl'
+tokenizer_path = 'model_data/tokenizer.pkl'
 tokenizer = load(open(tokenizer_path, 'rb'))
 
 # pre-define the max sequence length (from training)
 max_length = 34
 
 # load the model
-model_path = 'model_9.h5'
+model_path = 'model_data/model_19.h5'
 model = load_model(model_path)
 
 # load and prepare the photograph
-image_path = 'example.jpg'
-image = extract_features(image_path)
+test_path = 'test_data'
+for image_file in os.listdir(test_path):
+        try:
+            image_type = imghdr.what(os.path.join(test_path, image_file))
+            if not image_type:
+                continue
+        except IsADirectoryError:
+            continue
+image = extract_features(image_file)
 
 # generate description
 description = generate_desc(model, tokenizer, image, max_length)
@@ -46,7 +53,7 @@ for x in description.split()[2:len(description.split())-1]:
 caption += '.'
 
 # Show image and it's caption
-pil_im = Image.open(image_path, 'r')
+pil_im = Image.open(image_file, 'r')
 fig, ax = plt.subplots(figsize=(8, 8))
 ax.get_xaxis().set_visible(False)
 ax.get_yaxis().set_visible(False)

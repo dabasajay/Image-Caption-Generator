@@ -1,3 +1,3 @@
-<h1>Test Images</h1>
+<h1>Test Folder</h1>
 
-Test Images Folder
+Put here the images you want to test the model on.

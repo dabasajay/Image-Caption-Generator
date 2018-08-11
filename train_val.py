@@ -5,12 +5,12 @@ from utils.load_data import *
 # Load Data
 # X1 : image features
 # X2 : text features
-X1train, X2train, max_length 	=	loadTrainData(path = 'Flickr8k_text/Flickr_8k.trainImages.txt',preprocessDataReady=False)
+X1train, X2train, max_length 	=	loadTrainData(path = 'train_val_data/Flickr_8k.trainImages.txt',preprocessDataReady=False)
 
-X1val, X2val = loadValData(path = 'Flickr_8k.devImages.txt')
+X1val, X2val = loadValData(path = 'train_val_data/Flickr_8k.devImages.txt')
 
 # load the tokenizer
-tokenizer_path = 'tokenizer.pkl'
+tokenizer_path = 'model_data/tokenizer.pkl'
 tokenizer = load(open(tokenizer_path, 'rb'))
 vocab_size = len(tokenizer.word_index) + 1
 
@@ -22,7 +22,7 @@ print('Max Length : ',max_length)
 model = defineRNNmodel(vocab_size, max_length)
 
 # train the model, run epochs manually and save after each epoch
-epochs = 10
+epochs = 20
 steps_train = len(X2train)
 steps_val = len(X2val)
 for i in range(epochs):
@@ -34,7 +34,7 @@ for i in range(epochs):
     model.fit_generator(generator_train, epochs=1, steps_per_epoch=steps_train, 
                         verbose=1, validation_data=generator_val, validation_steps=steps_val)
     # save model
-    model.save('model_' + str(i) + '.h5')
+    model.save('model_data/model_' + str(i) + '.h5')
 
 # Evaluate the model on validation data and ouput BLEU score
 # evaluate_model(model, X1val, X2val, tokenizer, max_length)

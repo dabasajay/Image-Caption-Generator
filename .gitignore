@@ -1,4 +1,4 @@
-utils/Flicker8k_Dataset
-utils/Flickr8k.token.txt
-utils/Flickr_8k.trainImages.txt
-utils/Flickr_8k.devImages.txt
+train_val_data/Flicker8k_Dataset
+train_val_data/Flickr8k.token.txt
+train_val_data/Flickr_8k.trainImages.txt
+train_val_data/Flickr_8k.devImages.txt

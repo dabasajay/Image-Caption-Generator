@@ -90,11 +90,11 @@ def preprocessData():
 	features = extract_features(path)
 	print('Completed. Saving now...')
 	# save to file
-	dump(features, open('features.pkl', 'wb'))
+	dump(features, open('model_data/features.pkl', 'wb'))
 	print("Save Complete.")
 
 	# load descriptions containing file and parse descriptions
-	descriptions_path = 'Flickr8k_text/Flickr8k.token.txt'
+	descriptions_path = 'train_val_data/Flickr8k.token.txt'
 
 	descriptions = load_descriptions(descriptions_path)
 	print('Loaded Descriptions: %d ' % len(descriptions))
@@ -103,7 +103,7 @@ def preprocessData():
 	clean_descriptions(descriptions)
 
 	# save descriptions
-	save_descriptions(descriptions, 'descriptions.txt')
+	save_descriptions(descriptions, 'model_data/descriptions.txt')
 
 
 # Now descriptions.txt is of form :

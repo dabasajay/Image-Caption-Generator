@@ -7,8 +7,8 @@ A Neural Network to generate captions for an image.
 Recommended System Requirements to train model.
 
 <ul type="square">
-	<li>A good cpu and a gpu</li>
-	<li>Atleast 8gb of ram</li>
+	<li>A good CPU and a GPU</li>
+	<li>Atleast 8gb of RAM</li>
 </ul>
 
 Required Libraries for python
@@ -20,7 +20,8 @@ Required Libraries for python
 	<li>Matplotlib</li>
 </ul>
 
-Flickr8k Dataset : : <a href="https://forms.illinois.edu/sec/1713398">Dataset Request Form</a>
+Flickr8k Dataset: <a href="https://forms.illinois.edu/sec/1713398">Dataset Request Form</a>
+
 <strong>Important:</strong> After downloading the dataset, put the reqired files in train_val_data folder
 
 <h1>Procedure to Train Model</h1>

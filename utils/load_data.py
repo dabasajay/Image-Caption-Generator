@@ -138,7 +138,7 @@ def data_generator(photos, descriptions, tokenizer, max_length):
 			yield [[in_img, in_seq], out_word]
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-def loadTrainData(path = 'Flickr8k_text/Flickr_8k.trainImages.txt',preprocessDataReady=True):
+def loadTrainData(path = 'train_val_data/Flickr_8k.trainImages.txt',preprocessDataReady=True):
 
 	train = load_set(path)
 	print('Dataset: %d' % len(train))
@@ -148,17 +148,17 @@ def loadTrainData(path = 'Flickr8k_text/Flickr_8k.trainImages.txt',preprocessDat
 		preprocessData()
 
 	# descriptions
-	train_descriptions = load_clean_descriptions('descriptions.txt', train)
+	train_descriptions = load_clean_descriptions('model_data/descriptions.txt', train)
 	print('Descriptions: train=%d' % len(train_descriptions))
 
 	# photo features
-	train_features = load_photo_features('features.pkl', train)
+	train_features = load_photo_features('model_data/features.pkl', train)
 	print('Photos: train=%d' % len(train_features))
 
 	# prepare tokenizer
 	tokenizer = create_tokenizer(train_descriptions)
 	# save the tokenizer
-	dump(tokenizer, open('tokenizer.pkl', 'wb'))
+	dump(tokenizer, open('model_data/tokenizer.pkl', 'wb'))
 
 	# determine the maximum sequence length
 	max_length = max_lengthcalc(train_descriptions)
@@ -167,7 +167,7 @@ def loadTrainData(path = 'Flickr8k_text/Flickr_8k.trainImages.txt',preprocessDat
 
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-def loadValData(path = 'Flickr8k_text/Flickr_8k.devImages.txt'):
+def loadValData(path = 'train_val_data/Flickr_8k.devImages.txt'):
 
 	val = load_set(path)
 	print('Dataset: %d' % len(val))

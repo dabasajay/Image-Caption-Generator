@@ -11,6 +11,11 @@ from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.image import load_img, img_to_array
 from nltk.translate.bleu_score import corpus_bleu
 
+from keras.models import Sequential
+from keras.layers import LSTM, Embedding, TimeDistributed, Dense, RepeatVector, Merge, Activation, Flatten
+from keras.optimizers import Adam, RMSprop
+from keras.layers.wrappers import Bidirectional
+
 
 # define the CNN model
 def defineCNNmodel():
@@ -21,24 +26,29 @@ def defineCNNmodel():
  	return model
 
 # define the RNN model
-def defineRNNmodel(vocab_size, max_length):
-	# feature extractor model
-	inputs1 = Input(shape=(2048,))
-	fe1 = Dense(256, activation='relu')(inputs1)
-	# sequence model
-	inputs2 = Input(shape=(max_length,))
-	se1 = Embedding(vocab_size, 256, mask_zero=True)(inputs2)
-	se2 = LSTM(256)(se1)
-	# decoder model
-	decoder1 = add([fe1, se2])
-	decoder2 = Dense(256, activation='relu')(decoder1)
-	outputs = Dense(vocab_size, activation='softmax')(decoder2)
-	# tie it together [image, seq] [word]
-	model = Model(inputs=[inputs1, inputs2], outputs=outputs)
-	model.compile(loss='categorical_crossentropy', optimizer='adam')
-	# summarize model
-	print(model.summary())
-	return model
+def defineRNNmodel(vocab_size, max_len):
+	embedding_size = 300
+    # Input dimension is 2048 since we will feed it the encoded version of the image.
+    image_model = Sequential([
+        Dense(embedding_size, input_shape=(2048,), activation='relu'),
+        RepeatVector(max_len)
+    ])
+    # Since we are going to predict the next word using the previous words(length of previous words changes with every iteration over the caption), we have to set return_sequences = True.
+    caption_model  = Sequential([
+        Embedding(vocab_size, embedding_size, input_length=max_len),
+        LSTM(256, return_sequences=True),
+        TimeDistributed(Dense(300))
+    ])
+    # Merging the models and creating a softmax classifier
+    final_model = Sequential([
+        Merge([image_model, caption_model], mode='concat', concat_axis=1),
+        Bidirectional(LSTM(256, return_sequences=False)),
+        Dense(vocab_size),
+        Activation('softmax')
+    ])
+    final_model.compile(loss='categorical_crossentropy', optimizer=RMSprop(), metrics=['accuracy'])
+    final_model.summary()
+    return final_model
 
 
 # map an integer to a word

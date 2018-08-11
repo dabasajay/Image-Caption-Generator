@@ -1,10 +1,13 @@
-from utils import preprocessing
+import numpy as np
+from utils.preprocessing import *
+from pickle import load, dump
+from keras.preprocessing.text import Tokenizer
+from keras.preprocessing.sequence import pad_sequences
+from keras.utils import to_categorical
 
-# Load image data and text data that we can use to fit the model
-
-# We have Flickr_8k.trainImages.txt and Flickr_8k.devImages.txt files which consist
-# of unique identifiers which can be used to filter the images and their descriptions
-
+'''
+We have Flickr_8k.trainImages.txt and Flickr_8k.devImages.txt files which consist of unique identifiers which can be used to filter the images and their descriptions
+'''
 # load a pre-defined list of photo identifiers
 def load_set(filename):
 	file = open(filename, 'r')
@@ -22,18 +25,12 @@ def load_set(filename):
 	return set(dataset)
 
 '''
-The model we will develop will generate a caption given a photo, 
-and the caption will be generated one word at a time. 
-The sequence of previously generated words will be provided as input. 
-Therefore, we will need a ‘first word’ to kick-off the generation process 
+The model we will develop will generate a caption given a photo, and the caption will be generated one word at a time. 
+The sequence of previously generated words will be provided as input. Therefore, we will need a ‘first word’ to kick-off the generation process 
 and a ‘last word‘ to signal the end of the caption.
-
-We will use the strings ‘startseq‘ and ‘endseq‘ for this purpose. 
-These tokens are added to the loaded descriptions as they are loaded. 
-It is important to do this now before we encode the text so that 
-the tokens are also encoded correctly.
+We will use the strings ‘startseq‘ and ‘endseq‘ for this purpose. These tokens are added to the loaded descriptions as they are loaded. 
+It is important to do this now before we encode the text so that the tokens are also encoded correctly.
 '''
-
 # load clean descriptions into memory
 def load_clean_descriptions(filename, dataset):
 	file = open(filename, 'r')
@@ -58,13 +55,10 @@ def load_clean_descriptions(filename, dataset):
 
 
 '''
-The description text will need to be encoded to numbers before it can be 
-presented to the model as in input or compared to the model’s predictions.
-The first step in encoding the data is to create a consistent mapping from 
-words to unique integer values. Keras provides the Tokenizer class that 
+The description text will need to be encoded to numbers before it can be presented to the model as in input or compared to the model’s predictions.
+The first step in encoding the data is to create a consistent mapping from words to unique integer values. Keras provides the Tokenizer class that 
 can learn this mapping from the loaded description data.
 '''
-
 # convert a dictionary of clean descriptions to a list of descriptions
 def to_lines(descriptions):
 	all_desc = list()
@@ -80,12 +74,9 @@ def create_tokenizer(descriptions):
 	return tokenizer
 
 '''
-Each description will be split into words. 
-The model will be provided one word and the photo and generate the next word. 
-Then the first two words of the description will be provided to the model as 
-input with the image to generate the next word. 
+Each description will be split into words. The model will be provided one word and the photo and generate the next word. 
+Then the first two words of the description will be provided to the model as input with the image to generate the next word. 
 This is how the model will be trained.
-
 For example, the input sequence “little girl running in field” would be 
 split into 6 input-output pairs to train the model:
 
@@ -99,79 +90,95 @@ photo	startseq, little, girl, running, in, field, endseq
 '''
 
 # create sequences of images, input sequences and output words for an image
-def create_sequences(tokenizer, max_length, descriptions, photos):
+def create_sequences(tokenizer, max_length, desc_list, photo):
 	#X1 : input for photo features
 	#X2 : input for text features
 	X1, X2, y = list(), list(), list()
-	# walk through each image identifier
-	for key, desc_list in descriptions.items():
-		# walk through each description for the image
-		for desc in desc_list:
-			# encode the sequence
-			seq = tokenizer.texts_to_sequences([desc])[0]
-			# split one sequence into multiple X,y pairs
-			for i in range(1, len(seq)):
-				# split into input and output pair
-				in_seq, out_seq = seq[:i], seq[i]
-				# pad input sequence
-				in_seq = pad_sequences([in_seq], maxlen=max_length)[0]
-				# encode output sequence
-				out_seq = to_categorical([out_seq], num_classes=vocab_size)[0]
-				# store
-				X1.append(photos[key][0])
-				X2.append(in_seq)
-				y.append(out_seq)
-	return array(X1), array(X2), array(y)
+	vocab_size = len(tokenizer.word_index) + 1
+	# walk through each description for the image
+	for desc in desc_list:
+		# encode the sequence
+		seq = tokenizer.texts_to_sequences([desc])[0]
+		# split one sequence into multiple X,y pairs
+		for i in range(1, len(seq)):
+			# split into input and output pair
+			in_seq, out_seq = seq[:i], seq[i]
+			# pad input sequence
+			in_seq = pad_sequences([in_seq], maxlen=max_length)[0]
+			# encode output sequence
+			out_seq = to_categorical([out_seq], num_classes=vocab_size)[0]
+			# store
+			X1.append(photo)
+			X2.append(in_seq)
+			y.append(out_seq)
+	return np.array(X1), np.array(X2), np.array(y)
 
 # calculate the length of the description with the most words
-def max_length(descriptions):
+def max_lengthcalc(descriptions):
 	lines = to_lines(descriptions)
 	return max(len(d.split()) for d in lines)
 
-
-# load training dataset (6K)
-filename = 'Flickr8k_text/Flickr_8k.trainImages.txt'
-train = load_set(filename)
-print('Dataset: %d' % len(train))
-
-# descriptions
-train_descriptions = load_clean_descriptions('descriptions.txt', train)
-print('Descriptions: train=%d' % len(train_descriptions))
-
-# photo features
-train_features = load_photo_features('features.pkl', train)
-print('Photos: train=%d' % len(train_features))
-
-# prepare tokenizer
-tokenizer = create_tokenizer(train_descriptions)
-vocab_size = len(tokenizer.word_index) + 1
-print('Vocabulary Size: %d' % vocab_size)
-
-# determine the maximum sequence length
-max_length = max_length(train_descriptions)
-print('Description Length: %d' % max_length)
-
-# prepare sequences
-X1train, X2train, ytrain = create_sequences(tokenizer, 
-											max_length, 
-											train_descriptions, 
-											train_features)
+# load photo features
+def load_photo_features(filename, dataset):
+	# load all features
+	all_features = load(open(filename, 'rb'))
+	# filter features
+	features = {k: all_features[k] for k in dataset}
+	return features
 
 
+# data generator, intended to be used in a call to model.fit_generator()
+def data_generator(photos, descriptions, tokenizer, max_length):
+	# loop for ever over images
+	while 1:
+		for key, desc_list in descriptions.items():
+			# retrieve the photo feature
+			photo = photos[key][0]
+			in_img, in_seq, out_word = create_sequences(tokenizer, max_length, desc_list, photo)
+			yield [[in_img, in_seq], out_word]
 
-# load val set
-filename = 'Flickr8k_text/Flickr_8k.devImages.txt'
-val = load_set(filename)
-print('Dataset: %d' % len(val))
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+def loadTrainData(path = 'Flickr8k_text/Flickr_8k.trainImages.txt',preprocessDataReady=True):
 
-# descriptions
-val_descriptions = load_clean_descriptions('descriptions.txt', val)
-print('Descriptions: val=%d' % len(val_descriptions))
+	train = load_set(path)
+	print('Dataset: %d' % len(train))
 
-# photo features
-val_features = load_photo_features('features.pkl', val)
-print('Photos: val=%d' % len(val_features))
+	# check if we already have preprocessed data saved and if not, preprocess the data.
+	if preprocessDataReady is False:
+		preprocessData()
 
-# prepare sequences
-X1val, X2val, yval = create_sequences(tokenizer, max_length, val_descriptions, val_features)
+	# descriptions
+	train_descriptions = load_clean_descriptions('descriptions.txt', train)
+	print('Descriptions: train=%d' % len(train_descriptions))
 
+	# photo features
+	train_features = load_photo_features('features.pkl', train)
+	print('Photos: train=%d' % len(train_features))
+
+	# prepare tokenizer
+	tokenizer = create_tokenizer(train_descriptions)
+	# save the tokenizer
+	dump(tokenizer, open('tokenizer.pkl', 'wb'))
+
+	# determine the maximum sequence length
+	max_length = max_lengthcalc(train_descriptions)
+
+	return train_features, train_descriptions, max_length
+
+
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+def loadValData(path = 'Flickr8k_text/Flickr_8k.devImages.txt'):
+
+	val = load_set(path)
+	print('Dataset: %d' % len(val))
+
+	# descriptions
+	val_descriptions = load_clean_descriptions('descriptions.txt', val)
+	print('Descriptions: val=%d' % len(val_descriptions))
+
+	# photo features
+	val_features = load_photo_features('features.pkl', val)
+	print('Photos: val=%d' % len(val_features))
+
+	return val_features, val_descriptions
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

@@ -1,34 +1,37 @@
 import numpy as np
-import string
-from os import listdir
+import os
 from pickle import dump
+import string
+from tqdm import tqdm
+from utils.model import CNNModel
 from keras.applications.inception_v3 import preprocess_input
 from keras.preprocessing.image import load_img, img_to_array
 
-#The function returns a dictionary of image identifier to image features.
+# The function returns a dictionary with key - image identifier(id) and value - image features.
 def extract_features(path):
- 	model = defineCNNmodel()
- 	# extract features from each photo
- 	features = dict()
- 	for name in listdir(path):
- 		# load an image from file
- 		filename = path + '/' + name
- 		image = load_img(filename, target_size=(299, 299))
- 		# convert the image pixels to a numpy array
- 		image = img_to_array(image)
- 		# reshape data for the model
- 		image = image.reshape((1, image.shape[0], image.shape[1], image.shape[2]))
- 		# prepare the image for the VGG model
- 		image = preprocess_input(image)
- 		# get features
- 		feature = model.predict(image, verbose=0)
- 		# get image id
- 		image_id = name.split('.')[0]
- 		# store feature
- 		features[image_id] = feature
+	# Get CNN Model from model.py
+	model = CNNModel()
+	features = dict()
+	# Extract features from each photo
+	for name in tqdm(os.listdir(path)):
+		# load an image from file
+		filename = path + name
+		image = load_img(filename, target_size=(299, 299))
+		# convert the image pixels to a numpy array
+		image = img_to_array(image)
+		# reshape data for the model
+		image = image.reshape((1, image.shape[0], image.shape[1], image.shape[2]))
+		# prepare the image for the Inceptionv3 model
+		image = preprocess_input(image)
+		# get features
+		feature = model.predict(image, verbose=0)
+		# get image id
+		image_id = name.split('.')[0]
+		# store feature
+		features[image_id] = feature
 	return features
 
-# extract descriptions for images
+# Extract descriptions for images
 def load_descriptions(filename):
 	file = open(filename, 'r')
 	doc = file.read()
@@ -72,7 +75,7 @@ def clean_descriptions(descriptions):
 			# store as string
 			desc_list[i] =  ' '.join(desc)
 
-# save descriptions to file, one per line
+# Save descriptions to file, one per line
 def save_descriptions(descriptions, filename):
 	lines = list()
 	for key, desc_list in descriptions.items():
@@ -83,28 +86,22 @@ def save_descriptions(descriptions, filename):
 	file.write(data)
 	file.close()
 
-def preprocessData():
-	# extract features from all images
-	path = 'Flicker8k_Dataset'
+def preprocessData(config):
+	# Extract features from all images
 	print('Generating image features...')
-	features = extract_features(path)
+	features = extract_features(config['images_path'])
 	print('Completed. Saving now...')
-	# save to file
-	dump(features, open('model_data/features.pkl', 'wb'))
-	print("Save Complete.")
-
-	# load descriptions containing file and parse descriptions
-	descriptions_path = 'train_val_data/Flickr8k.token.txt'
-
-	descriptions = load_descriptions(descriptions_path)
+	# Save to file
+	dump(features, open(config['model_save_path']+'features.pkl', 'wb'))
+	print("Saved Successfully.")
+	# Load descriptions containing file and parse descriptions
+	descriptions = load_descriptions(config['descriptions_path'])
 	print('Loaded Descriptions: %d ' % len(descriptions))
-
-	# clean descriptions
+	# Clean descriptions
 	clean_descriptions(descriptions)
-
-	# save descriptions
-	save_descriptions(descriptions, 'model_data/descriptions.txt')
-
-
-# Now descriptions.txt is of form :
-# Example : 2252123185_487f21e336 stadium full of people watch game
+	# Save descriptions
+	save_descriptions(descriptions, config['model_save_path']+'descriptions.txt')
+"""
+	*Now descriptions.txt is of form :- id desc
+		Example : 2252123185_487f21e336 stadium full of people watch game
+"""

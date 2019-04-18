@@ -42,7 +42,7 @@ Required Libraries for Python along with their version numbers used while making
 <ul type="square">
 	<li><a href="https://github.com/jbrownlee/Datasets/releases/download/Flickr8k/Flickr8k_Dataset.zip">Flickr8k_Dataset</a></li>
 	<li><a href="https://github.com/jbrownlee/Datasets/releases/download/Flickr8k/Flickr8k_text.zip">Flickr8k_text</a></li>
-	<a href="https://machinelearningmastery.com/develop-a-deep-learning-caption-generation-model-in-python/">Download Link Credits: Jason Brownlee</a>
+	Download Link Credits:<a href="https://machinelearningmastery.com/develop-a-deep-learning-caption-generation-model-in-python/"> Jason Brownlee</a>
 </ul>
 
 <strong>Important:</strong> After downloading the dataset, put the reqired files in train_val_data folder
@@ -69,5 +69,5 @@ Required Libraries for Python along with their version numbers used while making
 <ul type="square">
 	<li><a href="https://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Vinyals_Show_and_Tell_2015_CVPR_paper.pdf">Show and Tell: A Neural Image Caption Generator</a> - Oriol Vinyals, Alexander Toshev, Samy Bengio, Dumitru Erhan</li>
 	<li><a href="https://arxiv.org/abs/1703.09137">Where to put the Image in an Image Caption Generator</a> - Marc Tanti, Albert Gatt, Kenneth P. Camilleri</li>
-	<li><a href="https://machinelearningmastery.com/develop-a-deep-learning-caption-generation-model-in-python/"></a>How to Develop a Deep Learning Photo Caption Generator from Scratch</li>
+	<li><a href="https://machinelearningmastery.com/develop-a-deep-learning-caption-generation-model-in-python/">How to Develop a Deep Learning Photo Caption Generator from Scratch</a></li>
 </ul>

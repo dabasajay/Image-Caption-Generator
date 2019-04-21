@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from keras.models import load_model
 from keras.preprocessing.image import load_img, img_to_array
 from keras.applications.inception_v3 import preprocess_input
+from utils.model import CNNModel, generate_desc
 
 from config import config
 

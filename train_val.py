@@ -1,15 +1,17 @@
 from pickle import load
 from utils.model import *
-from utils.load_data import *
+from utils.load_data import loadTrainData, loadValData, data_generator
+from tensorflow.keras.callbacks import ModelCheckpoint
 from config import config, rnnConfig
+import random
+random.seed(1035)
 
 """
 	*Load Data
 	*X1 : Image features
-	*X2 : Text features
+	*X2 : Text features(Captions)
 """
-# If you've already processed the data once, you can avoid doing it again by setting preprocessDataReady=True
-X1train, X2train, max_length = loadTrainData(config,preprocessDataReady=False)
+X1train, X2train, max_length = loadTrainData(config)
 
 X1val, X2val = loadValData(config)
 
@@ -24,7 +26,7 @@ vocab_size = len(tokenizer.word_index) + 1
 	*Define the RNN model
 """
 model = RNNModel(vocab_size, max_length, rnnConfig)
-print('Model Summary : ')
+print('RNN Model (Decoder) Summary : ')
 print(model.summary())
 
 """
@@ -33,11 +35,10 @@ print(model.summary())
 num_of_epochs = config['num_of_epochs']
 
 if(config['animation']):
-    from random import randint
     def selectRandom(dict):
-        randomNum = randint(0,len(dict)-1)
+        randomNum = random.randint(0,len(dict)-1)
         i=0
-        for key,item in dict.items():
+        for key,_ in dict.items():
             if(i==randomNum):
                 return key
             i = i+1
@@ -50,27 +51,39 @@ if(config['animation']):
 
 steps_train = len(X2train)
 steps_val = len(X2val)
-print('Total Numer of Epochs = ',num_of_epochs)
+model_save_path = config['model_data_path']+"model_epoch-{epoch:02d}_train_loss-{loss:.4f}_val_loss-{val_loss:.4f}.hdf5"
+checkpoint = ModelCheckpoint(model_save_path, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
+callbacks = [checkpoint]
+print('Total Number of Epochs = ',num_of_epochs)
 for i in range(num_of_epochs):
     print('Epoch : ',i+1)
-    # create the train data generator
+    # Shuffle train data
+    ids_train = list(X2train.keys())
+    random.shuffle(ids_train)
+    X2train_shuffled = {_id: X2train[_id] for _id in ids_train}
+    X2train = X2train_shuffled
+    # Shuffle validation data though it's not necessary since it's never used for training, just for validation
+    ids_val = list(X2val.keys())
+    random.shuffle(ids_val)
+    X2val_shuffled = {_id: X2val[_id] for _id in ids_val}
+    X2val = X2val_shuffled
+    # Create the train data generator
     # returns [[img_features, text_features], out_word]
     generator_train = data_generator(X1train, X2train, tokenizer, max_length)
-    # create the val data generator
+    # Create the validation data generator
     # returns [[img_features, text_features], out_word]
     generator_val = data_generator(X1val, X2val, tokenizer, max_length)
-    # fit for one epoch
+    # Fit for one epoch
     model.fit_generator(generator_train,
                 epochs=1,
                 steps_per_epoch=steps_train,
                 validation_data=generator_val,
                 validation_steps=steps_val,
+                callbacks=callbacks,
                 verbose=1)
     if(config['animation']):
-        captions_for_image_train.append(generate_desc(model,tokenizer,selected_image_train,max_length))
-        captions_for_image_val.append(generate_desc(model,tokenizer,selected_image_val,max_length))
-    # save model
-    model.save(config['model_save_path']+ 'model_epoch_' + str(i) + '.h5')
+        captions_for_image_train.append(generate_caption(model,tokenizer,selected_image_train,max_length))
+        captions_for_image_val.append(generate_caption(model,tokenizer,selected_image_val,max_length))
 
 """
     *Generate GIF
@@ -102,7 +115,7 @@ if(config['animation']):
             return ax
         # FuncAnimation will call the 'update' function for each frame; here
         # animating over num_of_epochs frames, with an interval of 1000ms between frames.
-        anim = FuncAnimation(fig, update, frames=np.arange(0, config['num_of_epochs']), interval=config['anim_time_int'])
+        anim = FuncAnimation(fig, update, frames=np.arange(0, len(captions_for_image)), interval=config['anim_time_int'])
         if(trainOut):
             _ = anim.save('duringTraining.gif', dpi=80, writer='imagemagick')
             trainOut = False

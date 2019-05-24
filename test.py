@@ -41,10 +41,10 @@ for image_file in os.listdir(config['test_data_path']):
 	if(image_file.split('.')[1]=='jpg' or image_file.split('.')[1]=='jpeg'):
 		image = extract_features(config['test_data_path']+image_file,image_model)
 		# Generate caption
-		caption = generate_caption(caption_model, tokenizer, image, max_length)
+		generated_caption = generate_caption(caption_model, tokenizer, image, max_length)
 		# Remove startseq and endseq
-		caption = 'Caption: ' + caption.split()[1].capitalize()
-		for x in caption.split()[2:len(caption.split())-1]:
+		caption = 'Caption: ' + generated_caption.split()[1].capitalize()
+		for x in generated_caption.split()[2:len(generated_caption.split())-1]:
 		    caption = caption + ' ' + x
 		caption += '.'
 		# Show image and its caption

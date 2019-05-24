@@ -3,9 +3,10 @@ config = {
 	'images_path': 'train_val_data/Flicker8k_Dataset/', #Make sure you put that last slash(/)
 	'train_data_path': 'train_val_data/Flickr_8k.trainImages.txt',
 	'val_data_path': 'train_val_data/Flickr_8k.devImages.txt',
-	'descriptions_path': 'train_val_data/Flickr8k.token.txt',
+	'captions_path': 'train_val_data/Flickr8k.token.txt',
 	'tokenizer_path': 'model_data/tokenizer.pkl',
-	'model_save_path': 'model_data/', #Make sure you put that last slash(/)
+	'model_data_path': 'model_data/', #Make sure you put that last slash(/)
+	'model_load_path': 'model_data/model_epoch-01_train_loss-4.5119_val_loss-3.9564.hdf5',
 	'num_of_epochs': 15,
 	'max_length': 34, #This is set during training of model
 	'test_data_path': 'test_data/', #Make sure you put that last slash(/)

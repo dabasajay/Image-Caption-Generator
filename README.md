@@ -79,10 +79,11 @@ Required Libraries for Python along with their version numbers used while making
 6. `model_data_path` :- path for saving files related to model
 7. **`model_load_path`** :- path for loading trained model
 8. **`num_of_epochs`** :- Number of epochs
-9. **`batch_size`** :- Batch size for training (larger will consume more GPU & CPU memory)
-10. `test_data_path` :- Folder path containing images for testing/inference
-11. **`model_type`** :- CNN Model type to use -> inceptionv3 or vgg16
-12. **`random_seed`** :- Random seed for reproducibility of results
+9. **`max_length`** :- Maximum length of captions. This is set manually after training of model and required for test.py
+10. **`batch_size`** :- Batch size for training (larger will consume more GPU & CPU memory)
+11. `test_data_path` :- Folder path containing images for testing/inference
+12. **`model_type`** :- CNN Model type to use -> inceptionv3 or vgg16
+13. **`random_seed`** :- Random seed for reproducibility of results
 
 #### rnnConfig
 

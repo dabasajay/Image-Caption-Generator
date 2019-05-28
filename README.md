@@ -1,6 +1,11 @@
 <h2>Image Caption Generator</h2>
 
-A Neural Network to generate captions for an image.
+<a href="https://github.com/dabasajay/Image-Caption-Generator/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/dabasajay/Image-Caption-Generator.svg?color=%231155cc"></a>
+<a href="https://github.com/dabasajay/Image-Caption-Generator/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/dabasajay/Image-Caption-Generator.svg?color=%231155cc"></a>
+<a href="https://github.com/dabasajay/Image-Caption-Generator/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/dabasajay/Image-Caption-Generator.svg?color=%231155cc"></a>
+<a href="https://github.com/dabasajay/Image-Caption-Generator/blob/master/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/dabasajay/Image-Caption-Generator.svg?color=%231155cc"></a>
+
+A neural network to generate captions for an image.
 
 <p align="center">
   <strong>Examples</strong>
@@ -11,17 +16,17 @@ A Neural Network to generate captions for an image.
 </p>
 
 <p align="center">
-	Credits : <a href="https://towardsdatascience.com/image-captioning-in-deep-learning-9cd23fb4d8d2">Towardsdatascience</a>
+	Image Credits : <a href="https://towardsdatascience.com/image-captioning-in-deep-learning-9cd23fb4d8d2">Towardsdatascience</a>
 </p>
 
-<h4>Requirements</h4>
+<h2>Requirements</h2>
 
 Recommended System Requirements to train model.
 
 <ul type="square">
 	<li>A good CPU and a GPU with atleast 4gb memory</li>
 	<li>Atleast 8gb of RAM</li>
-	<li>Active internet connection so that keras can download inceptionv3 model weights</li>
+	<li>Active internet connection so that keras can download inceptionv3/vgg16 model weights</li>
 </ul>
 
 Required Libraries for Python along with their version numbers used while making & testing of this project
@@ -47,7 +52,7 @@ Required Libraries for Python along with their version numbers used while making
 
 <strong>Important:</strong> After downloading the dataset, put the reqired files in train_val_data folder
 
-<h4>Procedure to Train Model</h4>
+<h2>Procedure to Train Model</h2>
 <ol>
 	<li>Clone the repository to preserve directory structure</li>
 	<li>Put the required dataset files in train_val_data Folder (files mentioned in readme there)</li>
@@ -55,7 +60,7 @@ Required Libraries for Python along with their version numbers used while making
 	<li>Run train_val.py</li>
 </ol>
 
-<h4>Procedure to Test on new images (After training only)</h4>
+<h2>Procedure to Test on new images</h2>
 <ol>
 	<li>Clone the repository to preserve directory structure</li>
 	<li>Train the model to generate required files in model_data folder</li>
@@ -64,7 +69,7 @@ Required Libraries for Python along with their version numbers used while making
 	<li>Run test.py</li>
 </ol>
 
-<h4>References</h4>
+<h2>References</h2>
 
 <ul type="square">
 	<li><a href="https://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Vinyals_Show_and_Tell_2015_CVPR_paper.pdf">Show and Tell: A Neural Image Caption Generator</a> - Oriol Vinyals, Alexander Toshev, Samy Bengio, Dumitru Erhan</li>

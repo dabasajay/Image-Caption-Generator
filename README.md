@@ -1,4 +1,4 @@
-<h2>Image Caption Generator</h2>
+## Image Caption Generator
 
 <a href="https://github.com/dabasajay/Image-Caption-Generator/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/dabasajay/Image-Caption-Generator.svg?color=%231155cc"></a>
 <a href="https://github.com/dabasajay/Image-Caption-Generator/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/dabasajay/Image-Caption-Generator.svg?color=%231155cc"></a>
@@ -52,7 +52,7 @@ Required Libraries for Python along with their version numbers used while making
 
 <strong>Important:</strong> After downloading the dataset, put the reqired files in train_val_data folder
 
-<h2>Procedure to Train Model</h2>
+## Procedure to Train Model
 <ol>
 	<li>Clone the repository to preserve directory structure</li>
 	<li>Put the required dataset files in train_val_data Folder (files mentioned in readme there)</li>
@@ -60,7 +60,7 @@ Required Libraries for Python along with their version numbers used while making
 	<li>Run train_val.py</li>
 </ol>
 
-<h2>Procedure to Test on new images</h2>
+## Procedure to Test on new images
 <ol>
 	<li>Clone the repository to preserve directory structure</li>
 	<li>Train the model to generate required files in model_data folder</li>
@@ -69,7 +69,21 @@ Required Libraries for Python along with their version numbers used while making
 	<li>Run test.py</li>
 </ol>
 
-<h2>References</h2>
+## TODO
+
+- [X] Support for VGG16 Model. Uses InceptionV3 Model by default
+
+- [X] Support for 2 architectures of RNN (Decoder) Model
+
+- [X] Support for batch processing in data generator with shuffling
+
+- [ ] Implement BEAM Search
+
+- [ ] Implement Attention
+
+- [ ] Support for pre-trained word vectors like word2vec, GloVe etc.
+
+## References
 
 <ul type="square">
 	<li><a href="https://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Vinyals_Show_and_Tell_2015_CVPR_paper.pdf">Show and Tell: A Neural Image Caption Generator</a> - Oriol Vinyals, Alexander Toshev, Samy Bengio, Dumitru Erhan</li>

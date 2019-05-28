@@ -19,7 +19,7 @@ A neural network to generate captions for an image.
 	Image Credits : <a href="https://towardsdatascience.com/image-captioning-in-deep-learning-9cd23fb4d8d2">Towardsdatascience</a>
 </p>
 
-<h2>Requirements</h2>
+## Requirements
 
 Recommended System Requirements to train model.
 
@@ -56,7 +56,7 @@ Required Libraries for Python along with their version numbers used while making
 <ol>
 	<li>Clone the repository to preserve directory structure</li>
 	<li>Put the required dataset files in train_val_data Folder (files mentioned in readme there)</li>
-	<li>Review config.py for paths and other configurations</li>
+	<li>Review config.py for paths and other configurations (explained below)</li>
 	<li>Run train_val.py</li>
 </ol>
 
@@ -65,8 +65,36 @@ Required Libraries for Python along with their version numbers used while making
 	<li>Clone the repository to preserve directory structure</li>
 	<li>Train the model to generate required files in model_data folder</li>
 	<li>Put the test image in test_data folder</li>
-	<li>Review config.py for paths and other configurations</li>
+	<li>Review config.py for paths and other configurations (explained below)</li>
 	<li>Run test.py</li>
+</ol>
+
+## Configurations (config.py)
+
+#### config
+
+<ol>
+	<li><strong>images_path</strong> :- Folder path containing flickr dataset images</li>
+	<li>train_data_path :- .txt file path containing images ids for training</li>
+	<li>val_data_path :- .txt file path containing imgage ids for validation</li>
+	<li>captions_path :- .txt file path containing captions</li>
+	<li>tokenizer_path :- path for saving tokenizer</li>
+	<li>model_data_path :- path for saving files related to model</li>
+	<li><strong>model_load_path</strong> :- path for loading trained model</li>
+	<li><strong>num_of_epochs</strong> :- Number of epochs</li>
+	<li><strong>batch_size</strong> :- Batch size for training (larger will consume more GPU & CPU memory)</li>
+	<li>test_data_path :- </li>
+	<li><strong>model_type</strong> :- CNN Model type to use -> inceptionv3 or vgg16</li>
+	<li><strong>random_seed</strong> :- Random seed for reproducibility of results</li>
+</ol>
+
+#### rnnConfig
+
+<ol>
+	<li><strong>embedding_size</strong> : Embedding size used in Decoder(RNN) Model</li>
+	<li><strong>LSTM_units</strong> : Number of LSTM units in Decoder(RNN) Model</li>
+	<li><strong>dense_units</strong> : Number of Dense units in Decoder(RNN) Model</li>
+	<li><strong>dropout</strong> : Dropout probability used in Dropout layer in Decoder(RNN) Model</li>
 </ol>
 
 ## TODO

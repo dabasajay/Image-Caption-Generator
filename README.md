@@ -21,10 +21,10 @@ A neural network to generate captions for an image.
 
 ## Requirements
 
-`Recommended System Requirements to train model.`
+Recommended System Requirements to train model.
 
 <ul type="square">
-	<li>`A good CPU and a GPU with atleast 4gb memory`</li>
+	<li>A good CPU and a GPU with atleast 4gb memory</li>
 	<li>Atleast 8gb of RAM</li>
 	<li>Active internet connection so that keras can download inceptionv3/vgg16 model weights</li>
 </ul>
@@ -53,49 +53,43 @@ Required Libraries for Python along with their version numbers used while making
 <strong>Important:</strong> After downloading the dataset, put the reqired files in train_val_data folder
 
 ## Procedure to Train Model
-<ol>
-	<li>Clone the repository to preserve directory structure</li>
-	<li>Put the required dataset files in train_val_data Folder (files mentioned in readme there)</li>
-	<li>Review config.py for paths and other configurations (explained below)</li>
-	<li>Run train_val.py</li>
-</ol>
+
+1. Clone the repository to preserve directory structure
+2. Put the required dataset files in train_val_data Folder (files mentioned in readme there)
+3. Review `config.py` for paths and other configurations (explained below)
+4. Run `train_val.py`
 
 ## Procedure to Test on new images
-<ol>
-	<li>Clone the repository to preserve directory structure</li>
-	<li>Train the model to generate required files in model_data folder</li>
-	<li>Put the test image in test_data folder</li>
-	<li>Review config.py for paths and other configurations (explained below)</li>
-	<li>Run test.py</li>
-</ol>
+
+1. Clone the repository to preserve directory structure
+2. Train the model to generate required files in model_data folder
+3. Put the test image in test_data folder
+4. Review `config.py` for paths and other configurations (explained below)
+5. Run `test.py`
 
 ## Configurations (config.py)
 
 #### config
 
-<ol>
-	<li><strong>images_path</strong> :- Folder path containing flickr dataset images</li>
-	<li>train_data_path :- .txt file path containing images ids for training</li>
-	<li>val_data_path :- .txt file path containing imgage ids for validation</li>
-	<li>captions_path :- .txt file path containing captions</li>
-	<li>tokenizer_path :- path for saving tokenizer</li>
-	<li>model_data_path :- path for saving files related to model</li>
-	<li><strong>model_load_path</strong> :- path for loading trained model</li>
-	<li><strong>num_of_epochs</strong> :- Number of epochs</li>
-	<li><strong>batch_size</strong> :- Batch size for training (larger will consume more GPU & CPU memory)</li>
-	<li>test_data_path :- </li>
-	<li><strong>model_type</strong> :- CNN Model type to use -> inceptionv3 or vgg16</li>
-	<li><strong>random_seed</strong> :- Random seed for reproducibility of results</li>
-</ol>
+1. **`images_path`** :- Folder path containing flickr dataset images
+2. `train_data_path` :- .txt file path containing images ids for training
+3. `val_data_path` :- .txt file path containing imgage ids for validation
+4. `captions_path` :- .txt file path containing captions
+5. `tokenizer_path` :- path for saving tokenizer
+6. `model_data_path` :- path for saving files related to model
+7. **`model_load_path`** :- path for loading trained model
+8. **`num_of_epochs`** :- Number of epochs
+9. **`batch_size`** :- Batch size for training (larger will consume more GPU & CPU memory)
+10. `test_data_path` :- Folder path containing images for testing/inference
+11. **`model_type`** :- CNN Model type to use -> inceptionv3 or vgg16
+12. **`random_seed`** :- Random seed for reproducibility of results
 
 #### rnnConfig
 
-<ol>
-	<li><strong>embedding_size</strong> : Embedding size used in Decoder(RNN) Model</li>
-	<li><strong>LSTM_units</strong> : Number of LSTM units in Decoder(RNN) Model</li>
-	<li><strong>dense_units</strong> : Number of Dense units in Decoder(RNN) Model</li>
-	<li><strong>dropout</strong> : Dropout probability used in Dropout layer in Decoder(RNN) Model</li>
-</ol>
+1. **`embedding_size`** :- Embedding size used in Decoder(RNN) Model
+2. **`LSTM_units`** :- Number of LSTM units in Decoder(RNN) Model
+3. **`dense_units`** :- Number of Dense units in Decoder(RNN) Model
+4. **`dropout`** :- Dropout probability used in Dropout layer in Decoder(RNN) Model
 
 ## TODO
 

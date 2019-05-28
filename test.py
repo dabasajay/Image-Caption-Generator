@@ -4,21 +4,26 @@ from pickle import load
 import matplotlib.pyplot as plt
 from keras.models import load_model
 from keras.preprocessing.image import load_img, img_to_array
-from keras.applications.inception_v3 import preprocess_input
 from utils.model import CNNModel, generate_caption
 import os
 
 from config import config
 
-# Extract features from each photo in the directory
-def extract_features(filename,model):
-	# Loading and resizing image because input size for CNN model used here (InceptionV3) is 299x299
-	image = load_img(filename, target_size=(299, 299))
+# Extract features from each image in the directory
+def extract_features(filename, model, model_type):
+	if model_type == 'inceptionv3':
+		from keras.applications.inception_v3 import preprocess_input
+		target_size = (299, 299)
+	elif model_type == 'vgg16':
+		from keras.applications.vgg16 import preprocess_input
+		target_size = (224, 224)
+	# Loading and resizing image
+	image = load_img(filename, target_size=target_size)
 	# Convert the image pixels to a numpy array
 	image = img_to_array(image)
 	# Reshape data for the model
 	image = image.reshape((1, image.shape[0], image.shape[1], image.shape[2]))
-	# Prepare the image for the CNN Model (Inceptionv3) model
+	# Prepare the image for the CNN Model model
 	image = preprocess_input(image)
 	# Pass image into model to get encoded features
 	features = model.predict(image, verbose=0)
@@ -34,13 +39,16 @@ max_length = config['max_length']
 # Load the model
 caption_model = load_model(config['model_load_path'])
 
-image_model = CNNModel()
+image_model = CNNModel(config['model_type'])
 
 # Load and prepare the image
 for image_file in os.listdir(config['test_data_path']):
+	if(image_file.split('--')[0]=='output'):
+		continue
 	if(image_file.split('.')[1]=='jpg' or image_file.split('.')[1]=='jpeg'):
-		image = extract_features(config['test_data_path']+image_file,image_model)
-		# Generate caption
+		# Encode image using CNN Model
+		image = extract_features(config['test_data_path']+image_file, image_model, config['model_type'])
+		# Generate caption using Decoder RNN Model
 		generated_caption = generate_caption(caption_model, tokenizer, image, max_length)
 		# Remove startseq and endseq
 		caption = 'Caption: ' + generated_caption.split()[1].capitalize()
@@ -54,4 +62,4 @@ for image_file in os.listdir(config['test_data_path']):
 		ax.get_yaxis().set_visible(False)
 		_ = ax.imshow(np.asarray(pil_im), interpolation='nearest')
 		_ = ax.set_title(caption,fontdict={'fontsize': '20','fontweight' : '40'})
-		plt.savefig(config['test_data_path']+'output_'+image_file)
+		plt.savefig(config['test_data_path']+'output--'+image_file)

@@ -4,11 +4,11 @@ from pickle import load, dump
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.utils import to_categorical
-
+import random
 '''
 	*We have Flickr_8k.trainImages.txt and Flickr_8k.devImages.txt files which consist of unique identifiers(id) 
 		which can be used to filter the images and their descriptions
-	*Load a pre-defined list of photo identifiers(id)
+	*Load a pre-defined list of image identifiers(id)
 	*Glimpse of file:
 		2513260012_03d33305cf.jpg
 		2903617548_d3e38d7f88.jpg
@@ -32,7 +32,7 @@ def load_set(filename):
 	return set(ids)
 
 '''
-	*The model we'll develop will generate a caption for a given photo and the caption will be generated one word at a time. 
+	*The model we'll develop will generate a caption for a given image and the caption will be generated one word at a time. 
 	*The sequence of previously generated words will be provided as input. Therefore, we will need a ‘first word’ to 
 		kick-off the generation process and a ‘last word‘ to signal the end of the caption.
 	*We'll use the strings ‘startseq‘ and ‘endseq‘ for this purpose. These tokens are added to the captions
@@ -103,7 +103,7 @@ def calc_max_length(captions):
 	return max(len(line.split()) for line in lines)
 
 '''
-	*Each caption will be split into words. The model will be provided one word & the photo and it generates the next word. 
+	*Each caption will be split into words. The model will be provided one word & the image and it generates the next word. 
 	*Then the first two words of the caption will be provided to the model as input with the image to generate the next word. 
 	*This is how the model will be trained.
 	*For example, the input sequence “little girl running in field” would be 
@@ -111,16 +111,16 @@ def calc_max_length(captions):
 
 		X1		X2(text sequence) 								y(word)
 		-----------------------------------------------------------------
-		photo	startseq,										little
-		photo	startseq, little,								girl
-		photo	startseq, little, girl,							running
-		photo	startseq, little, girl, running,				in
-		photo	startseq, little, girl, running, in,			field
-		photo	startseq, little, girl, running, in, field,		endseq
+		image	startseq,										little
+		image	startseq, little,								girl
+		image	startseq, little, girl,							running
+		image	startseq, little, girl, running,				in
+		image	startseq, little, girl, running, in,			field
+		image	startseq, little, girl, running, in, field,		endseq
 '''
 # Create sequences of images, input sequences and output words for an image
-def create_sequences(tokenizer, max_length, captions_list, photo):
-	# X1 : input for photo features
+def create_sequences(tokenizer, max_length, captions_list, image):
+	# X1 : input for image features
 	# X2 : input for text features
 	# y  : output word
 	X1, X2, y = list(), list(), list()
@@ -138,18 +138,22 @@ def create_sequences(tokenizer, max_length, captions_list, photo):
 			# Encode output sequence
 			out_seq = to_categorical([out_seq], num_classes=vocab_size)[0]
 			# Store
-			X1.append(photo)
+			X1.append(image)
 			X2.append(in_seq)
 			y.append(out_seq)
 	return np.array(X1), np.array(X2), np.array(y)
 
 # Data generator, intended to be used in a call to model.fit_generator()
-def data_generator(images, captions, tokenizer, max_length):
+def data_generator(images, captions, tokenizer, max_length, random_seed):
+	# Setting random seed for reproducibility of results
+	random.seed(random_seed)
 	# Loop infinitely over images
 	while True:
 		for image_id, captions_list in captions.items():
 			# Retrieve the image features
 			image = images[image_id][0]
+			# Suffle captions list
+			random.shuffle(captions_list)
 			input_img, input_sequence, output_word = create_sequences(tokenizer, max_length, captions_list, image)
 			yield [[input_img, input_sequence], output_word]
 
@@ -161,7 +165,7 @@ def loadTrainData(config):
 	# Load captions
 	train_captions, _count = load_cleaned_captions(config['model_data_path']+'captions.txt', train_image_ids)
 	# Load image features
-	train_image_features = load_image_features(config['model_data_path']+'features.pkl', train_image_ids)
+	train_image_features = load_image_features(config['model_data_path']+'features_'+str(config['model_type'])+'.pkl', train_image_ids)
 	print('{}: Available images for training: {}'.format(mytime(),len(train_image_features)))
 	print('{}: Available captions for training: {}'.format(mytime(),_count))
 	if not os.path.exists(config['model_data_path']+'tokenizer.pkl'):
@@ -178,7 +182,7 @@ def loadValData(config):
 	# Load captions
 	val_captions, _count = load_cleaned_captions(config['model_data_path']+'captions.txt', val_image_ids)
 	# Load image features
-	val_features = load_image_features(config['model_data_path']+'features.pkl', val_image_ids)
+	val_features = load_image_features(config['model_data_path']+'features_'+str(config['model_type'])+'.pkl', val_image_ids)
 	print('{}: Available images for validation: {}'.format(mytime(),len(val_features)))
 	print('{}: Available captions for validation: {}'.format(mytime(),_count))
 	return val_features, val_captions

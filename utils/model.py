@@ -1,8 +1,9 @@
 import numpy as np
 # Keras
 from keras.applications.inception_v3 import InceptionV3
+from keras.applications.vgg16 import VGG16
 from keras.models import Model
-from keras.layers import Input, Dense, Dropout, LSTM, Embedding, concatenate
+from keras.layers import Input, Dense, Dropout, LSTM, Embedding, concatenate, RepeatVector, TimeDistributed
 from keras.preprocessing.sequence import pad_sequences
 from tqdm import tqdm
 # To measure BLEU Score
@@ -11,8 +12,11 @@ from nltk.translate.bleu_score import corpus_bleu
 """
 	*Define the CNN model
 """
-def CNNModel():
-	model = InceptionV3()
+def CNNModel(model_type):
+	if model_type == 'inceptionv3':
+		model = InceptionV3()
+	elif model_type == 'vgg16':
+		model = VGG16()
 	model.layers.pop()
 	model = Model(inputs=model.inputs, outputs=model.layers[-1].output)
 	return model
@@ -20,15 +24,17 @@ def CNNModel():
 """
 	*Define the RNN model
 """
-def RNNModel(vocab_size, max_len, rnnConfig):
+def RNNModel(vocab_size, max_len, rnnConfig, model_type):
 	embedding_size = rnnConfig['embedding_size']
-	# InceptionV3 outputs a 2048 dimensional vector for each image which we'll feed to RNN Model
-	image_input = Input(shape=(2048,))
+	if model_type == 'inceptionv3':
+		# InceptionV3 outputs a 2048 dimensional vector for each image, which we'll feed to RNN Model
+		image_input = Input(shape=(2048,))
+	elif model_type == 'vgg16':
+		# VGG16 outputs a 4096 dimensional vector for each image, which we'll feed to RNN Model
+		image_input = Input(shape=(4096,))
 	image_model_1 = Dropout(rnnConfig['dropout'])(image_input)
 	image_model = Dense(embedding_size, activation='relu')(image_model_1)
 
-	# Since we are going to predict the next word using the previous words
-	# (length of previous words changes with every iteration over the caption), we have to set return_sequences = True.
 	caption_input = Input(shape=(max_len,))
 	# mask_zero: We zero pad inputs to the same length, the zero mask ignores those inputs. E.g. it is an efficiency.
 	caption_model_1 = Embedding(vocab_size, embedding_size, mask_zero=True)(caption_input)
@@ -39,6 +45,38 @@ def RNNModel(vocab_size, max_len, rnnConfig):
 	final_model_1 = concatenate([image_model, caption_model])
 	final_model_2 = Dense(rnnConfig['dense_units'], activation='relu')(final_model_1)
 	final_model = Dense(vocab_size, activation='softmax')(final_model_2)
+
+	model = Model(inputs=[image_input, caption_input], outputs=final_model)
+	model.compile(loss='categorical_crossentropy', optimizer='adam')
+	return model
+
+"""
+	*Define the RNN model with different architecture
+"""
+def AlternativeRNNModel(vocab_size, max_len, rnnConfig, model_type):
+	embedding_size = rnnConfig['embedding_size']
+	if model_type == 'inceptionv3':
+		# InceptionV3 outputs a 2048 dimensional vector for each image, which we'll feed to RNN Model
+		image_input = Input(shape=(2048,))
+	elif model_type == 'vgg16':
+		# VGG16 outputs a 4096 dimensional vector for each image, which we'll feed to RNN Model
+		image_input = Input(shape=(4096,))
+	image_model_1 = Dense(embedding_size, activation='relu')(image_input)
+	image_model = RepeatVector(max_len)(image_model_1)
+
+	# Since we are going to predict the next word using the previous words
+	# (length of previous words changes with every iteration over the caption), we have to set return_sequences = True.
+	caption_input = Input(shape=(max_len,))
+	# mask_zero: We zero pad inputs to the same length, the zero mask ignores those inputs. E.g. it is an efficiency.
+	caption_model_1 = Embedding(vocab_size, embedding_size, mask_zero=True)(caption_input)
+	caption_model_2 = LSTM(rnnConfig['LSTM_units'], return_sequences=True)(caption_model_1)
+	caption_model = TimeDistributed(Dense(embedding_size, activation='relu'))(caption_model_2)
+
+	# Merging the models and creating a softmax classifier
+	final_model_1 = concatenate([image_model, caption_model])
+	final_model_2 = LSTM(rnnConfig['LSTM_units'], return_sequences=False)(final_model_1)
+	final_model_3 = Dense(rnnConfig['dense_units'], activation='relu')(final_model_2)
+	final_model = Dense(vocab_size, activation='softmax')(final_model_3)
 
 	model = Model(inputs=[image_input, caption_input], outputs=final_model)
 	model.compile(loss='categorical_crossentropy', optimizer='adam')

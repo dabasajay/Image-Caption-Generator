@@ -4,7 +4,6 @@ from pickle import dump
 import string
 from tqdm import tqdm
 from utils.model import CNNModel
-from keras.applications.inception_v3 import preprocess_input
 from keras.preprocessing.image import load_img, img_to_array
 from datetime import datetime as dt
 
@@ -26,20 +25,26 @@ def mytime(with_date=False):
 		...
 	}
 """
-def extract_features(path):
+def extract_features(path, model_type):
+	if model_type == 'inceptionv3':
+		from keras.applications.inception_v3 import preprocess_input
+		target_size = (299, 299)
+	elif model_type == 'vgg16':
+		from keras.applications.vgg16 import preprocess_input
+		target_size = (224, 224)
 	# Get CNN Model from model.py
-	model = CNNModel()
+	model = CNNModel(model_type)
 	features = dict()
 	# Extract features from each photo
 	for name in tqdm(os.listdir(path)):
-		# Loading and resizing image because input size for CNN model used here (InceptionV3) is 299x299
+		# Loading and resizing image
 		filename = path + name
-		image = load_img(filename, target_size=(299, 299))
+		image = load_img(filename, target_size=target_size)
 		# Convert the image pixels to a numpy array
 		image = img_to_array(image)
 		# Reshape data for the model
 		image = image.reshape((1, image.shape[0], image.shape[1], image.shape[2]))
-		# Prepare the image for the CNN Model (Inceptionv3) model
+		# Prepare the image for the CNN Model model
 		image = preprocess_input(image)
 		# Pass image into model to get encoded features
 		feature = model.predict(image, verbose=0)
@@ -128,13 +133,13 @@ def save_captions(captions, filename):
 
 def preprocessData(config):
 	# Extract features from all images
-	if os.path.exists(config['model_data_path']+'features.pkl'):
-		print('{}: Image features already generated at {}'.format(mytime(), config['model_data_path']+'features.pkl'))
+	if os.path.exists(config['model_data_path']+'features_'+str(config['model_type'])+'.pkl'):
+		print('{}: Image features already generated at {}'.format(mytime(), config['model_data_path']+'features_'+str(config['model_type'])+'.pkl'))
 	else:
-		print('{}: Generating image features...'.format(mytime()))
-		features = extract_features(config['images_path'])
+		print('{}: Generating image features using '+str(config['model_type'])+' model...'.format(mytime()))
+		features = extract_features(config['images_path'], config['model_type'])
 		# Save to file
-		dump(features, open(config['model_data_path']+'features.pkl', 'wb'))
+		dump(features, open(config['model_data_path']+'features_'+str(config['model_type'])+'.pkl', 'wb'))
 		print('{}: Completed & Saved features for {} images successfully'.format(mytime(),len(features)))
 	# Load file containing captions and parse them
 	if os.path.exists(config['model_data_path']+'captions.txt'):

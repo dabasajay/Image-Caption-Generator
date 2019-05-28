@@ -141,21 +141,39 @@ def create_sequences(tokenizer, max_length, captions_list, image):
 			X1.append(image)
 			X2.append(in_seq)
 			y.append(out_seq)
-	return np.array(X1), np.array(X2), np.array(y)
+	return X1, X2, y
 
 # Data generator, intended to be used in a call to model.fit_generator()
-def data_generator(images, captions, tokenizer, max_length, random_seed):
+def data_generator(images, captions, tokenizer, max_length, batch_size, random_seed):
 	# Setting random seed for reproducibility of results
 	random.seed(random_seed)
-	# Loop infinitely over images
+	# Image ids
+	image_ids = list(captions.keys())
+	_count=0
+	assert batch_size<= len(image_ids), 'Batch size must be less than or equal to {}'.format(len(image_ids))
 	while True:
-		for image_id, captions_list in captions.items():
+		if _count >= len(image_ids):
+			# Generator exceeded or reached the end so restart it
+			_count = 0
+		# Batch list to store data
+		input_img_batch, input_sequence_batch, output_word_batch = list(), list(), list()
+		for i in range(_count, min(len(image_ids), _count+batch_size)):
+			# Retrieve the image id
+			image_id = image_ids[i]
 			# Retrieve the image features
 			image = images[image_id][0]
-			# Suffle captions list
+			# Retrieve the captions list
+			captions_list = captions[image_id]
+			# Shuffle captions list
 			random.shuffle(captions_list)
 			input_img, input_sequence, output_word = create_sequences(tokenizer, max_length, captions_list, image)
-			yield [[input_img, input_sequence], output_word]
+			# Add to batch
+			for j in range(len(input_img)):
+				input_img_batch.append(input_img[j])
+				input_sequence_batch.append(input_sequence[j])
+				output_word_batch.append(output_word[j])
+		_count = _count + batch_size
+		yield [[np.array(input_img_batch), np.array(input_sequence_batch)], np.array(output_word_batch)]
 
 def loadTrainData(config):
 	train_image_ids = load_set(config['train_data_path'])

@@ -132,6 +132,7 @@ def save_captions(captions, filename):
 	file.close()
 
 def preprocessData(config):
+	print('{}: Using {} model'.format(mytime(),config['model_type'].title()))
 	# Extract features from all images
 	if os.path.exists(config['model_data_path']+'features_'+str(config['model_type'])+'.pkl'):
 		print('{}: Image features already generated at {}'.format(mytime(), config['model_data_path']+'features_'+str(config['model_type'])+'.pkl'))
@@ -148,7 +149,8 @@ def preprocessData(config):
 		print('{}: Parsing captions file...'.format(mytime()))
 		captions = load_captions(config['captions_path'])
 		# Clean captions
-		clean_captions(captions)
+		# Ignore this function because Tokenizer from keras will handle cleaning
+		# clean_captions(captions)
 		# Save captions
 		save_captions(captions, config['model_data_path']+'captions.txt')
 		print('{}: Parsed & Saved successfully'.format(mytime()))

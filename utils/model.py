@@ -3,7 +3,7 @@ import numpy as np
 from keras.applications.inception_v3 import InceptionV3
 from keras.applications.vgg16 import VGG16
 from keras.models import Model
-from keras.layers import Input, Dense, Dropout, LSTM, Embedding, concatenate, RepeatVector, TimeDistributed
+from keras.layers import Input, Dense, Dropout, LSTM, Embedding, concatenate, RepeatVector, TimeDistributed, Bidirectional
 from keras.preprocessing.sequence import pad_sequences
 from tqdm import tqdm
 # To measure BLEU Score
@@ -64,22 +64,26 @@ def AlternativeRNNModel(vocab_size, max_len, rnnConfig, model_type):
 	image_model_1 = Dense(embedding_size, activation='relu')(image_input)
 	image_model = RepeatVector(max_len)(image_model_1)
 
-	# Since we are going to predict the next word using the previous words
-	# (length of previous words changes with every iteration over the caption), we have to set return_sequences = True.
 	caption_input = Input(shape=(max_len,))
 	# mask_zero: We zero pad inputs to the same length, the zero mask ignores those inputs. E.g. it is an efficiency.
 	caption_model_1 = Embedding(vocab_size, embedding_size, mask_zero=True)(caption_input)
+	# Since we are going to predict the next word using the previous words
+	# (length of previous words changes with every iteration over the caption), we have to set return_sequences = True.
 	caption_model_2 = LSTM(rnnConfig['LSTM_units'], return_sequences=True)(caption_model_1)
-	caption_model = TimeDistributed(Dense(embedding_size, activation='relu'))(caption_model_2)
+	# caption_model = TimeDistributed(Dense(embedding_size, activation='relu'))(caption_model_2)
+	caption_model = TimeDistributed(Dense(embedding_size))(caption_model_2)
 
 	# Merging the models and creating a softmax classifier
 	final_model_1 = concatenate([image_model, caption_model])
-	final_model_2 = LSTM(rnnConfig['LSTM_units'], return_sequences=False)(final_model_1)
-	final_model_3 = Dense(rnnConfig['dense_units'], activation='relu')(final_model_2)
-	final_model = Dense(vocab_size, activation='softmax')(final_model_3)
+	# final_model_2 = LSTM(rnnConfig['LSTM_units'], return_sequences=False)(final_model_1)
+	final_model_2 = Bidirectional(LSTM(rnnConfig['LSTM_units'], return_sequences=False))(final_model_1)
+	# final_model_3 = Dense(rnnConfig['dense_units'], activation='relu')(final_model_2)
+	# final_model = Dense(vocab_size, activation='softmax')(final_model_3)
+	final_model = Dense(vocab_size, activation='softmax')(final_model_2)
 
 	model = Model(inputs=[image_input, caption_input], outputs=final_model)
 	model.compile(loss='categorical_crossentropy', optimizer='adam')
+	# model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
 	return model
 
 """

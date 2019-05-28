@@ -1,9 +1,9 @@
 ## Image Caption Generator
 
-<a href="https://github.com/dabasajay/Image-Caption-Generator/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/dabasajay/Image-Caption-Generator.svg?color=%231155cc"></a>
-<a href="https://github.com/dabasajay/Image-Caption-Generator/network"><img alt="GitHub forks" src="https://img.shields.io/github/forks/dabasajay/Image-Caption-Generator.svg?color=%231155cc"></a>
-<a href="https://github.com/dabasajay/Image-Caption-Generator/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/dabasajay/Image-Caption-Generator.svg?color=%231155cc"></a>
-<a href="https://github.com/dabasajay/Image-Caption-Generator/blob/master/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/dabasajay/Image-Caption-Generator.svg?color=%231155cc"></a>
+[![GitHub issues](https://img.shields.io/github/issues/dabasajay/Image-Caption-Generator.svg?color=%231155cc)](https://github.com/dabasajay/Image-Caption-Generator/issues)
+[![GitHub forks](https://img.shields.io/github/forks/dabasajay/Image-Caption-Generator.svg?color=%231155cc)](https://github.com/dabasajay/Image-Caption-Generator/network)
+[![GitHub stars](https://img.shields.io/github/stars/dabasajay/Image-Caption-Generator.svg?color=%231155cc)](https://github.com/dabasajay/Image-Caption-Generator/stargazers)
+[![GitHub license](https://img.shields.io/github/license/dabasajay/Image-Caption-Generator.svg?color=%231155cc)](https://github.com/dabasajay/Image-Caption-Generator/blob/master/LICENSE)
 
 A neural network to generate captions for an image.
 
@@ -21,10 +21,10 @@ A neural network to generate captions for an image.
 
 ## Requirements
 
-Recommended System Requirements to train model.
+`Recommended System Requirements to train model.`
 
 <ul type="square">
-	<li>A good CPU and a GPU with atleast 4gb memory</li>
+	<li>`A good CPU and a GPU with atleast 4gb memory`</li>
 	<li>Atleast 8gb of RAM</li>
 	<li>Active internet connection so that keras can download inceptionv3/vgg16 model weights</li>
 </ul>

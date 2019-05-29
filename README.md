@@ -97,7 +97,7 @@ Required Libraries for Python along with their version numbers used while making
 - Out of memory issue:
   - Try reducing batch_size
 - Results differ everytime I run script:
-  - Due to stochastic nature of these algoritms, results may differ slightly evertime. Even though I did set random seed to make results reproducible, results *may* differ slightly.
+  - Due to stochastic nature of these algoritms, results *may* differ slightly everytime. Even though I did set random seed to make results reproducible, results *may* differ slightly.
 
 ## TODO
 

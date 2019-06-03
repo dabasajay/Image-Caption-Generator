@@ -3,7 +3,6 @@
 [![Issues](https://img.shields.io/github/issues/dabasajay/Image-Caption-Generator.svg?color=%231155cc)](https://github.com/dabasajay/Image-Caption-Generator/issues)
 [![Forks](https://img.shields.io/github/forks/dabasajay/Image-Caption-Generator.svg?color=%231155cc)](https://github.com/dabasajay/Image-Caption-Generator/network)
 [![Stars](https://img.shields.io/github/stars/dabasajay/Image-Caption-Generator.svg?color=%231155cc)](https://github.com/dabasajay/Image-Caption-Generator/stargazers)
-[![License](https://img.shields.io/github/license/dabasajay/Image-Caption-Generator.svg?color=%231155cc)](https://github.com/dabasajay/Image-Caption-Generator/blob/master/LICENSE)
 [![Ajay Dabas](https://img.shields.io/badge/Ajay-Dabas-ff0000.svg)](https://dabasajay.github.io/)
 
 A neural network to generate captions for an image.
@@ -25,7 +24,7 @@ A neural network to generate captions for an image.
 Recommended System Requirements to train model.
 
 <ul type="square">
-	<li>A good CPU and a GPU with atleast 4gb memory</li>
+	<li>A good CPU and a GPU with atleast 8gb memory</li>
 	<li>Atleast 8gb of RAM</li>
 	<li>Active internet connection so that keras can download inceptionv3/vgg16 model weights</li>
 </ul>
@@ -54,6 +53,13 @@ Required Libraries for Python along with their version numbers used while making
 <strong>Important:</strong> After downloading the dataset, put the reqired files in train_val_data folder
 
 ## Training parameters and results
+
+#### NOTE
+<ul>
+	<li>Batch size = 64 took ~14GB GPU memory in InceptionV3 + AlternativeRNN, VGG16 + AlternativeRNN</li>
+	<li>Batch size = 64 took ~8GB GPU memory in InceptionV3 + RNN, VGG16 + RNN</li>
+	<li>If you're low on memory, use google colab or reduce batch size</li>
+</ul>
 
 | Model & Config | Argmax | BEAM Search | Attention+BEAM Search |
 | :--- | :--- | :--- | :--- |
@@ -114,9 +120,9 @@ Required Libraries for Python along with their version numbers used while making
 
 ## Frequently encountered problems
 
-- Out of memory issue:
+- **Out of memory issue**:
   - Try reducing batch_size
-- Results differ everytime I run script:
+- **Results differ everytime I run script**:
   - Due to stochastic nature of these algoritms, results *may* differ slightly everytime. Even though I did set random seed to make results reproducible, results *may* differ slightly.
 
 ## TODO

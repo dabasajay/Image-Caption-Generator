@@ -5,7 +5,7 @@
 [![Stars](https://img.shields.io/github/stars/dabasajay/Image-Caption-Generator.svg?color=%231155cc)](https://github.com/dabasajay/Image-Caption-Generator/stargazers)
 [![Ajay Dabas](https://img.shields.io/badge/Ajay-Dabas-ff0000.svg)](https://dabasajay.github.io/)
 
-A neural network to generate captions for an image.
+A neural network to generate captions for an image using Encoder(CNN)-Decoder(RNN) approach with Attention and BEAM Search along with support for using pre-trained word vectors (Word2vec, GloVe) in RNN Embeddings.
 
 <p align="center">
   <strong>Examples</strong>
@@ -24,8 +24,8 @@ A neural network to generate captions for an image.
 Recommended System Requirements to train model.
 
 <ul type="square">
-	<li>A good CPU and a GPU with atleast 8gb memory</li>
-	<li>Atleast 8gb of RAM</li>
+	<li>A good CPU and a GPU with atleast 8GB memory</li>
+	<li>Atleast 8GB of RAM</li>
 	<li>Active internet connection so that keras can download inceptionv3/vgg16 model weights</li>
 </ul>
 
@@ -33,7 +33,8 @@ Required Libraries for Python along with their version numbers used while making
 
 <ul type="square">
 	<li>Python - 3.6.7</li>
-	<li>Numpy - 1.16.2</li>
+	<li>Numpy - 1.16.4</li>
+	<li>Tensorflow - 1.13.1</li>
 	<li>Keras - 2.2.4</li>
 	<li>nltk - 3.2.5</li>
 	<li>PIL - 4.3.0</li>

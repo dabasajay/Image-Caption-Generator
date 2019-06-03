@@ -53,6 +53,21 @@ Required Libraries for Python along with their version numbers used while making
 
 <strong>Important:</strong> After downloading the dataset, put the reqired files in train_val_data folder
 
+## Results
+
+| Left-aligned | Center-aligned | Right-aligned |
+| --- | --- | --- |
+| git diff | git status | git status |
+
+| Left-aligned | Center-aligned | Right-aligned |
+| :---         |      :---:     |          ---: |
+| git diff     | git status     | git status    |
+| git diff     | git status     | git status    |
+
+| Left-aligned | Center-aligned | Right-aligned |
+| :--- | :---: | ---: |
+| git diff | git status | git status \| ex |
+
 ## Procedure to Train Model
 
 1. Clone the repository to preserve directory structure
@@ -64,7 +79,7 @@ Required Libraries for Python along with their version numbers used while making
 
 1. Clone the repository to preserve directory structure
 2. Train the model to generate required files in model_data folder
-3. Put the test image in test_data folder
+3. Put the test images in test_data folder
 4. Review `config.py` for paths and other configurations (explained below)
 5. Run `test.py`
 

@@ -59,7 +59,7 @@ Required Libraries for Python along with their version numbers used while making
 <ul>
 	<li>Batch size = 64 took ~14GB GPU memory in InceptionV3 + AlternativeRNN, VGG16 + AlternativeRNN</li>
 	<li>Batch size = 64 took ~8GB GPU memory in InceptionV3 + RNN, VGG16 + RNN</li>
-	<li>If you're low on memory, use google colab or reduce batch size</li>
+	<li><strong>If you're low on memory</strong>, use google colab or reduce batch size</li>
 </ul>
 
 | Model & Config | Argmax | BEAM Search | Attention+BEAM Search |
@@ -81,18 +81,20 @@ Required Libraries for Python along with their version numbers used while making
 
 ## Procedure to Train Model
 
-1. Clone the repository to preserve directory structure
-2. Put the required dataset files in train_val_data Folder (files mentioned in readme there)
-3. Review `config.py` for paths and other configurations (explained below)
-4. Run `train_val.py`
+1. Clone the repository to preserve directory structure.<br>
+`git clone https://github.com/dabasajay/Image-Caption-Generator.git`
+2. Put the required dataset files in train_val_data folder (files mentioned in readme there).
+3. Review `config.py` for paths and other configurations (explained below).
+4. Run `train_val.py`.
 
 ## Procedure to Test on new images
 
-1. Clone the repository to preserve directory structure
-2. Train the model to generate required files in model_data folder
-3. Put the test images in test_data folder
-4. Review `config.py` for paths and other configurations (explained below)
-5. Run `test.py`
+1. Clone the repository to preserve directory structure.<br>
+`git clone https://github.com/dabasajay/Image-Caption-Generator.git`
+2. Train the model to generate required files in model_data folder (steps given above).
+3. Put the test images in test_data folder.
+4. Review `config.py` for paths and other configurations (explained below).
+5. Run `test.py`.
 
 ## Configurations (config.py)
 
@@ -122,7 +124,7 @@ Required Libraries for Python along with their version numbers used while making
 ## Frequently encountered problems
 
 - **Out of memory issue**:
-  - Try reducing batch_size
+  - Try reducing `batch_size`
 - **Results differ everytime I run script**:
   - Due to stochastic nature of these algoritms, results *may* differ slightly everytime. Even though I did set random seed to make results reproducible, results *may* differ slightly.
 

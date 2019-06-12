@@ -4,10 +4,16 @@ from pickle import load
 import matplotlib.pyplot as plt
 from keras.models import load_model
 from keras.preprocessing.image import load_img, img_to_array
-from utils.model import CNNModel, generate_caption
+from utils.model import CNNModel, generate_caption_beam_search
 import os
 
 from config import config
+
+"""
+    *Some simple checking
+"""
+assert type(config['max_length']) is int, 'Please provide an integer value for `max_length` parameter in config.py file'
+assert type(config['beam_search_k']) is int, 'Please provide an integer value for `beam_search_k` parameter in config.py file'
 
 # Extract features from each image in the directory
 def extract_features(filename, model, model_type):
@@ -48,8 +54,8 @@ for image_file in os.listdir(config['test_data_path']):
 	if(image_file.split('.')[1]=='jpg' or image_file.split('.')[1]=='jpeg'):
 		# Encode image using CNN Model
 		image = extract_features(config['test_data_path']+image_file, image_model, config['model_type'])
-		# Generate caption using Decoder RNN Model
-		generated_caption = generate_caption(caption_model, tokenizer, image, max_length)
+		# Generate caption using Decoder RNN Model + BEAM search
+		generated_caption = generate_caption_beam_search(caption_model, tokenizer, image, max_length, beam_index=config['beam_search_k'])
 		# Remove startseq and endseq
 		caption = 'Caption: ' + generated_caption.split()[1].capitalize()
 		for x in generated_caption.split()[2:len(generated_caption.split())-1]:

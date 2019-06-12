@@ -69,9 +69,10 @@ Required libraries for Python along with their version numbers used while making
 
 #### NOTE
 <ul>
-	<li>Batch size = 64 took ~14GB GPU memory in InceptionV3 + AlternativeRNN, VGG16 + AlternativeRNN</li>
-	<li>Batch size = 64 took ~8GB GPU memory in InceptionV3 + RNN, VGG16 + RNN</li>
+	<li>Batch size = 64 took ~14GB GPU memory in case ofInceptionV3 + AlternativeRNN and VGG16 + AlternativeRNN</li>
+	<li>Batch size = 64 took ~8GB GPU memory in case of InceptionV3 + RNN and VGG16 + RNN</li>
 	<li><strong>If you're low on memory</strong>, use google colab or reduce batch size</li>
+	<li>In case of BEAM Search, loss and val_loss are same as in case of argmax since model is same</li>
 </ul>
 
 | Model & Config | Argmax | BEAM Search | Attention+BEAM Search |

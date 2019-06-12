@@ -89,8 +89,8 @@ Required libraries for Python along with their version numbers used while making
 
 | Image | Caption |
 | :--- | :--- |
-| !["img1"](DP.png "img1")|<ul><li>Argmax: *TO-DO*</li><li>BEAM Search <strong>(k=3)</strong>: *TO-DO*</li><li>BEAM Search <strong>(k=10)</strong>: *TO-DO*</li><li>Attention+BEAM Search: *TO-DO*</li></ul>|
-| !["img2"](DP.png "img2")|<ul><li>Argmax: *TO-DO*</li><li>BEAM Search <strong>(k=3)</strong>: *TO-DO*</li><li>BEAM Search <strong>(k=10)</strong>: *TO-DO*</li><li>Attention+BEAM Search: *TO-DO*</li></ul>|
+| <img src="https://github.com/dabasajay/Image-Caption-Generator/raw/master/test_data/bikestunt.jpg" alt="Image 1"> | <ul><li><strong>Argmax:<strong> A man in a blue shirt is riding a bike on a dirt path.</li><li><strong>BEAM Search, k=3:</strong> A man is riding a bicycle on a dirt path.</li><li><strong>Attention + BEAM Search:</strong> *TO-DO*</li></ul>|
+| <img src="https://github.com/dabasajay/Image-Caption-Generator/raw/master/test_data/surfing.jpeg" alt="Image 2"> | <ul><li><strong>Argmax:<strong> A man in a red kayak is riding down a waterfall.</li><li><strong>BEAM Search, k=3:</strong> A man on a surfboard is riding a wave.</li><li><strong>Attention + BEAM Search:</strong> *TO-DO*</li></ul>|
 
 ## 4. Procedure to Train Model
 

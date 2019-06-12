@@ -19,7 +19,19 @@ A neural network to generate captions for an image using Encoder(CNN)-Decoder(RN
 	Image Credits : <a href="https://towardsdatascience.com/image-captioning-in-deep-learning-9cd23fb4d8d2">Towardsdatascience</a>
 </p>
 
-## Requirements
+## Table of Contents
+
+1. [Requirements]()
+2. [Training parameters and results]()
+3. [Generated Captions]()
+4. [Procedure to Train Model]()
+5. [Procedure to Test on new images]()
+6. [Configurations (config.py)]()
+7. [Frequently encountered problems]()
+8. [TODO]()
+9. [References]()
+
+## 1. Requirements
 
 Recommended System Requirements to train model.
 
@@ -29,7 +41,7 @@ Recommended System Requirements to train model.
 	<li>Active internet connection so that keras can download inceptionv3/vgg16 model weights</li>
 </ul>
 
-Required Libraries for Python along with their version numbers used while making & testing of this project
+Required libraries for Python along with their version numbers used while making & testing of this project
 
 <ul type="square">
 	<li>Python - 3.6.7</li>
@@ -53,7 +65,7 @@ Required Libraries for Python along with their version numbers used while making
 
 <strong>Important:</strong> After downloading the dataset, put the reqired files in train_val_data folder
 
-## Training parameters and results
+## 2. Training parameters and results
 
 #### NOTE
 <ul>
@@ -70,7 +82,7 @@ Required Libraries for Python along with their version numbers used while making
 | **VGG16 + RNN** <ul><li>Epoch = 20</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>**Lower the better**<li>loss(train_loss): 2.6297</li><li>val_loss: 3.3486</li>**BLEU Scores on Val data**<br>**Higher the better**<li>BLEU-1: 0.557626</li><li>BLEU-2: 0.317652</li><li>BLEU-3: 0.216636</li><li>BLEU-4: 0.105288</li></ul> |<ul>**Crossentropy loss**<br>**Lower the better**<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Val data**<br>**Higher the better**<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |<ul>**Crossentropy loss**<br>**Lower the better**<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Val data**<br>**Higher the better**<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
 
 
-## Generated Captions
+## 3. Generated Captions
 
 #### Model used - *TO-DO*
 
@@ -79,14 +91,14 @@ Required Libraries for Python along with their version numbers used while making
 | !["img1"](DP.png "img1")|<ul><li>Argmax: *TO-DO*</li><li>BEAM Search: *TO-DO*</li><li>Attention+BEAM Search: *TO-DO*</li></ul>|
 | !["img2"](DP.png "img2")|<ul><li>Argmax: *TO-DO*</li><li>BEAM Search: *TO-DO*</li><li>Attention+BEAM Search: *TO-DO*</li></ul>|
 
-## Procedure to Train Model
+## 4. Procedure to Train Model
 
 1. Clone the repository to preserve directory structure
 2. Put the required dataset files in train_val_data Folder (files mentioned in readme there)
 3. Review `config.py` for paths and other configurations (explained below)
 4. Run `train_val.py`
 
-## Procedure to Test on new images
+## 5. Procedure to Test on new images
 
 1. Clone the repository to preserve directory structure
 2. Train the model to generate required files in model_data folder
@@ -94,7 +106,7 @@ Required Libraries for Python along with their version numbers used while making
 4. Review `config.py` for paths and other configurations (explained below)
 5. Run `test.py`
 
-## Configurations (config.py)
+## 6. Configurations (config.py)
 
 #### config
 
@@ -119,14 +131,14 @@ Required Libraries for Python along with their version numbers used while making
 3. **`dense_units`** :- Number of Dense units in Decoder(RNN) Model
 4. **`dropout`** :- Dropout probability used in Dropout layer in Decoder(RNN) Model
 
-## Frequently encountered problems
+## 7. Frequently encountered problems
 
 - **Out of memory issue**:
   - Try reducing batch_size
 - **Results differ everytime I run script**:
   - Due to stochastic nature of these algoritms, results *may* differ slightly everytime. Even though I did set random seed to make results reproducible, results *may* differ slightly.
 
-## TODO
+## 8. TODO
 
 - [X] Support for VGG16 Model. Uses InceptionV3 Model by default
 
@@ -140,7 +152,7 @@ Required Libraries for Python along with their version numbers used while making
 
 - [ ] Support for pre-trained word vectors like word2vec, GloVe etc.
 
-## References
+## 9. References
 
 <ul type="square">
 	<li><a href="https://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Vinyals_Show_and_Tell_2015_CVPR_paper.pdf">Show and Tell: A Neural Image Caption Generator</a> - Oriol Vinyals, Alexander Toshev, Samy Bengio, Dumitru Erhan</li>

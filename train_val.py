@@ -8,6 +8,19 @@ import random
 random.seed(config['random_seed'])
 
 """
+    *Some simple checking
+"""
+assert type(config['num_of_epochs']) is int, 'Please provide an integer value for `num_of_epochs` parameter in config.py file'
+assert type(config['max_length']) is int, 'Please provide an integer value for `max_length` parameter in config.py file'
+assert type(config['batch_size']) is int, 'Please provide an integer value for `batch_size` parameter in config.py file'
+assert type(config['beam_search_k']) is int, 'Please provide an integer value for `beam_search_k` parameter in config.py file'
+assert type(config['random_seed']) is int, 'Please provide an integer value for `random_seed` parameter in config.py file'
+assert type(rnnConfig['embedding_size']) is int, 'Please provide an integer value for `embedding_size` parameter in config.py file'
+assert type(rnnConfig['LSTM_units']) is int, 'Please provide an integer value for `LSTM_units` parameter in config.py file'
+assert type(rnnConfig['dense_units']) is int, 'Please provide an integer value for `dense_units` parameter in config.py file'
+assert type(rnnConfig['dropout']) is float, 'Please provide a float value for `dropout` parameter in config.py file'
+
+"""
 	*Load Data
 	*X1 : Image features
 	*X2 : Text features(Captions)
@@ -75,5 +88,5 @@ model.fit_generator(generator_train,
 """
 	*Evaluate the model on validation data and ouput BLEU score
 """
-print('Model trained successfully. Running model on validation set for calculating BLEU score')
-evaluate_model(model, X1val, X2val, tokenizer, max_length)
+print('Model trained successfully. Running model on validation set for calculating BLEU score using BEAM search with k={}'.format(config['beam_search_k']))
+evaluate_model_beam_search(model, X1val, X2val, tokenizer, max_length, beam_index=config['beam_search_k'])

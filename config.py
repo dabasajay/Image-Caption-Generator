@@ -10,6 +10,7 @@ config = {
 	'num_of_epochs': 20,
 	'max_length': 40, #This is set manually after training of model and required for test.py
 	'batch_size': 64,
+	'beam_search_k':3,
 	'test_data_path': 'test_data/', #Make sure you put that last slash(/)
 	'model_type': 'inceptionv3', # inceptionv3 or vgg16
 	'random_seed': 1035

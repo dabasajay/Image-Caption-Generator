@@ -96,7 +96,7 @@ Required libraries for Python along with their version numbers used while making
 
 1. Clone the repository to preserve directory structure.<br>
 `git clone https://github.com/dabasajay/Image-Caption-Generator.git`
-2. Put the required dataset files in train_val_data folder (files mentioned in readme there).
+2. Put the required dataset files in `train_val_data` folder (files mentioned in readme there).
 3. Review `config.py` for paths and other configurations (explained below).
 4. Run `train_val.py`.
 
@@ -104,8 +104,8 @@ Required libraries for Python along with their version numbers used while making
 
 1. Clone the repository to preserve directory structure.<br>
 `git clone https://github.com/dabasajay/Image-Caption-Generator.git`
-2. Train the model to generate required files in model_data folder (steps given above).
-3. Put the test images in test_data folder.
+2. Train the model to generate required files in `model_data` folder (steps given above).
+3. Put the test images in `test_data` folder.
 4. Review `config.py` for paths and other configurations (explained below).
 5. Run `test.py`.
 
@@ -153,6 +153,8 @@ Required libraries for Python along with their version numbers used while making
 - [X] Support for batch processing in data generator with shuffling
 
 - [X] Implement BEAM Search
+
+- [ ] Calculate BLEU Scores using BEAM Search
 
 - [ ] Implement Attention
 

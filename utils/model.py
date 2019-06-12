@@ -154,7 +154,14 @@ def generate_caption_beam_search(model, tokenizer, image, max_length, beam_index
 		# Take the top words
 		in_text = in_text[-beam_index:]
 	in_text = in_text[-1][0]
-	final_caption = [int_to_word(i,tokenizer) for i in in_text]
+	final_caption_raw = [int_to_word(i,tokenizer) for i in in_text]
+	final_caption = []
+	for word in final_caption_raw:
+		if word=='endseq':
+			break
+		else:
+			final_caption.append(word)
+	final_caption.append('endseq')
 	return ' '.join(final_caption)
 
 """

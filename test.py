@@ -52,6 +52,7 @@ for image_file in os.listdir(config['test_data_path']):
 	if(image_file.split('--')[0]=='output'):
 		continue
 	if(image_file.split('.')[1]=='jpg' or image_file.split('.')[1]=='jpeg'):
+		print('Generating caption for {}'.format(image_file))
 		# Encode image using CNN Model
 		image = extract_features(config['test_data_path']+image_file, image_model, config['model_type'])
 		# Generate caption using Decoder RNN Model + BEAM search
@@ -67,5 +68,5 @@ for image_file in os.listdir(config['test_data_path']):
 		ax.get_xaxis().set_visible(False)
 		ax.get_yaxis().set_visible(False)
 		_ = ax.imshow(np.asarray(pil_im), interpolation='nearest')
-		_ = ax.set_title(caption,fontdict={'fontsize': '20','fontweight' : '40'})
+		_ = ax.set_title("BEAM Search with k={}\n{}".format(config['beam_search_k'],caption),fontdict={'fontsize': '20','fontweight' : '40'})
 		plt.savefig(config['test_data_path']+'output--'+image_file)

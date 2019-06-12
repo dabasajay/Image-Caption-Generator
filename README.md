@@ -57,6 +57,7 @@ Required libraries for Python along with their version numbers used while making
 <strong>Flickr8k Dataset:</strong> <a href="https://forms.illinois.edu/sec/1713398">Dataset Request Form</a>
 
 <strong>UPDATE (April/2019):</strong> The official site seems to have been taken down (although the form still works). Here are some direct download links:
+
 <ul type="square">
 	<li><a href="https://github.com/jbrownlee/Datasets/releases/download/Flickr8k/Flickr8k_Dataset.zip">Flickr8k_Dataset</a></li>
 	<li><a href="https://github.com/jbrownlee/Datasets/releases/download/Flickr8k/Flickr8k_text.zip">Flickr8k_text</a></li>
@@ -68,19 +69,18 @@ Required libraries for Python along with their version numbers used while making
 ## 2. Training parameters and results
 
 #### NOTE
-<ul>
-	<li>Batch size = 64 took ~14GB GPU memory in case ofInceptionV3 + AlternativeRNN and VGG16 + AlternativeRNN</li>
-	<li>Batch size = 64 took ~8GB GPU memory in case of InceptionV3 + RNN and VGG16 + RNN</li>
-	<li><strong>If you're low on memory</strong>, use google colab or reduce batch size</li>
-	<li>In case of BEAM Search, loss and val_loss are same as in case of argmax since the model is same</li>
-</ul>
 
-| Model & Config | Argmax | BEAM Search | Attention+BEAM Search |
+- `batch_size=64` took ~14GB GPU memory in case of *InceptionV3 + AlternativeRNN* and *VGG16 + AlternativeRNN*
+- `batch_size=64` took ~8GB GPU memory in case of *InceptionV3 + RNN* and *VGG16 + RNN*
+- **If you're low on memory**, use google colab or reduce batch size
+- In case of BEAM Search, `loss` and `val_loss` are same as in case of argmax since the model is same
+
+| Model & Config | Argmax | BEAM Search | Attention + BEAM Search |
 | :--- | :--- | :--- | :--- |
-| **InceptionV3 + AlternativeRNN** <ul><li>Epoch = 20</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.4050</li><li>val_loss: 3.0527</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.596818</li><li>BLEU-2: 0.356009</li><li>BLEU-3: 0.252489</li><li>BLEU-4: 0.129536</li></ul> |<ul>**k=3**<br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
-| **InceptionV3 + RNN** <ul><li>Epoch = 20</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.5254</li><li>val_loss: 3.1769</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.601791</li><li>BLEU-2: 0.344289</li><li>BLEU-3: 0.230025</li><li>BLEU-4: 0.108898</li></ul> |<ul>**k=3**<br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
-| **VGG16 + AlternativeRNN** <ul><li>Epoch = 20</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.2880</li><li>val_loss: 3.1889</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.596655</li><li>BLEU-2: 0.342127</li><li>BLEU-3: 0.229676</li><li>BLEU-4: 0.108707</li></ul> | <ul>**k=3**<br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
-| **VGG16 + RNN** <ul><li>Epoch = 20</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.6297</li><li>val_loss: 3.3486</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.557626</li><li>BLEU-2: 0.317652</li><li>BLEU-3: 0.216636</li><li>BLEU-4: 0.105288</li></ul> |<ul>**k=3**<br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
+| **InceptionV3 + AlternativeRNN** <ul><li>Epoch = 20</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.4050</li><li>val_loss: 3.0527</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.596818</li><li>BLEU-2: 0.356009</li><li>BLEU-3: 0.252489</li><li>BLEU-4: 0.129536</li></ul> |<ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
+| **InceptionV3 + RNN** <ul><li>Epoch = 20</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.5254</li><li>val_loss: 3.1769</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.601791</li><li>BLEU-2: 0.344289</li><li>BLEU-3: 0.230025</li><li>BLEU-4: 0.108898</li></ul> |<ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
+| **VGG16 + AlternativeRNN** <ul><li>Epoch = 20</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.2880</li><li>val_loss: 3.1889</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.596655</li><li>BLEU-2: 0.342127</li><li>BLEU-3: 0.229676</li><li>BLEU-4: 0.108707</li></ul> | <ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
+| **VGG16 + RNN** <ul><li>Epoch = 20</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.6297</li><li>val_loss: 3.3486</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.557626</li><li>BLEU-2: 0.317652</li><li>BLEU-3: 0.216636</li><li>BLEU-4: 0.105288</li></ul> |<ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
 
 
 ## 3. Generated Captions
@@ -89,8 +89,8 @@ Required libraries for Python along with their version numbers used while making
 
 | Image | Caption |
 | :--- | :--- |
-| !["img1"](DP.png "img1")|<ul><li>Argmax: *TO-DO*</li><li>BEAM Search: *TO-DO*</li><li>Attention+BEAM Search: *TO-DO*</li></ul>|
-| !["img2"](DP.png "img2")|<ul><li>Argmax: *TO-DO*</li><li>BEAM Search: *TO-DO*</li><li>Attention+BEAM Search: *TO-DO*</li></ul>|
+| !["img1"](DP.png "img1")|<ul><li>Argmax: *TO-DO*</li><li>BEAM Search <strong>(k=3)</strong>: *TO-DO*</li><li>BEAM Search <strong>(k=10)</strong>: *TO-DO*</li><li>Attention+BEAM Search: *TO-DO*</li></ul>|
+| !["img2"](DP.png "img2")|<ul><li>Argmax: *TO-DO*</li><li>BEAM Search <strong>(k=3)</strong>: *TO-DO*</li><li>BEAM Search <strong>(k=10)</strong>: *TO-DO*</li><li>Attention+BEAM Search: *TO-DO*</li></ul>|
 
 ## 4. Procedure to Train Model
 
@@ -141,6 +141,8 @@ Required libraries for Python along with their version numbers used while making
   - Try reducing `batch_size`
 - **Results differ everytime I run script**:
   - Due to stochastic nature of these algoritms, results *may* differ slightly everytime. Even though I did set random seed to make results reproducible, results *may* differ slightly.
+- **Results aren't very great using beam search compared to argmax**:
+  - Try higher `k` in BEAM search using `beam_search_k` parameter in config. Note that higher `k` will improve results but it'll also increase inference time significantly.
 
 ## 8. TODO
 

@@ -23,7 +23,7 @@ A neural network to generate captions for an image using Encoder(CNN)-Decoder(RN
 
 1. [Requirements](#1-requirements)
 2. [Training parameters and results](#2-training-parameters-and-results)
-3. [Generated Captions](#3-generated-captions)
+3. [Generated Captions on Test Images](#3-generated-captions-on-test-images)
 4. [Procedure to Train Model](#4-procedure-to-train-model)
 5. [Procedure to Test on new images](#5-procedure-to-test-on-new-images)
 6. [Configurations (config.py)](#6-configurations-configpy)
@@ -77,13 +77,13 @@ Required libraries for Python along with their version numbers used while making
 
 | Model & Config | Argmax | BEAM Search | Attention + BEAM Search |
 | :--- | :--- | :--- | :--- |
-| **InceptionV3 + AlternativeRNN** <ul><li>Epoch = 20</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.4050</li><li>val_loss: 3.0527</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.596818</li><li>BLEU-2: 0.356009</li><li>BLEU-3: 0.252489</li><li>BLEU-4: 0.129536</li></ul> |<ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
-| **InceptionV3 + RNN** <ul><li>Epoch = 20</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.5254</li><li>val_loss: 3.1769</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.601791</li><li>BLEU-2: 0.344289</li><li>BLEU-3: 0.230025</li><li>BLEU-4: 0.108898</li></ul> |<ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
-| **VGG16 + AlternativeRNN** <ul><li>Epoch = 20</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.2880</li><li>val_loss: 3.1889</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.596655</li><li>BLEU-2: 0.342127</li><li>BLEU-3: 0.229676</li><li>BLEU-4: 0.108707</li></ul> | <ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
-| **VGG16 + RNN** <ul><li>Epoch = 20</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.6297</li><li>val_loss: 3.3486</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.557626</li><li>BLEU-2: 0.317652</li><li>BLEU-3: 0.216636</li><li>BLEU-4: 0.105288</li></ul> |<ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
+| **InceptionV3 + AlternativeRNN** <ul><li>Epochs = 20</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.4050</li><li>val_loss: 3.0527</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.596818</li><li>BLEU-2: 0.356009</li><li>BLEU-3: 0.252489</li><li>BLEU-4: 0.129536</li></ul> |<ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.606086</li><li>BLEU-2: 0.359171</li><li>BLEU-3: 0.249124</li><li>BLEU-4: 0.126599</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
+| **InceptionV3 + RNN** <ul><li>Epochs = 11</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.5254</li><li>val_loss: 3.1769</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.601791</li><li>BLEU-2: 0.344289</li><li>BLEU-3: 0.230025</li><li>BLEU-4: 0.108898</li></ul> |<ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.605097</li><li>BLEU-2: 0.356094</li><li>BLEU-3: 0.251132</li><li>BLEU-4: 0.129900</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
+| **VGG16 + AlternativeRNN** <ul><li>Epochs = 18</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.2880</li><li>val_loss: 3.1889</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.596655</li><li>BLEU-2: 0.342127</li><li>BLEU-3: 0.229676</li><li>BLEU-4: 0.108707</li></ul> | <ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.596655</li><li>BLEU-2: 0.342127</li><li>BLEU-3: 0.229676</li><li>BLEU-4: 0.108707</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
+| **VGG16 + RNN** <ul><li>Epochs = 7</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.6297</li><li>val_loss: 3.3486</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.557626</li><li>BLEU-2: 0.317652</li><li>BLEU-3: 0.216636</li><li>BLEU-4: 0.105288</li></ul> |<ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.568993</li><li>BLEU-2: 0.326569</li><li>BLEU-3: 0.226629</li><li>BLEU-4: 0.113102</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
 
 
-## 3. Generated Captions
+## 3. Generated Captions on Test Images
 
 **Model used** - *InceptionV3 + AlternativeRNN*
 
@@ -111,7 +111,7 @@ Required libraries for Python along with their version numbers used while making
 
 ## 6. Configurations (config.py)
 
-#### config
+**config**
 
 1. **`images_path`** :- Folder path containing flickr dataset images
 2. `train_data_path` :- .txt file path containing images ids for training
@@ -128,7 +128,7 @@ Required libraries for Python along with their version numbers used while making
 12. **`model_type`** :- CNN Model type to use -> inceptionv3 or vgg16
 13. **`random_seed`** :- Random seed for reproducibility of results
 
-#### rnnConfig
+**rnnConfig**
 
 1. **`embedding_size`** :- Embedding size used in Decoder(RNN) Model
 2. **`LSTM_units`** :- Number of LSTM units in Decoder(RNN) Model
@@ -154,7 +154,7 @@ Required libraries for Python along with their version numbers used while making
 
 - [X] Implement BEAM Search
 
-- [ ] Calculate BLEU Scores using BEAM Search
+- [X] Calculate BLEU Scores using BEAM Search
 
 - [ ] Implement Attention
 

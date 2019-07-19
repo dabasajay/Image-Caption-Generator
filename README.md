@@ -5,7 +5,7 @@
 [![Stars](https://img.shields.io/github/stars/dabasajay/Image-Caption-Generator.svg?color=%231155cc)](https://github.com/dabasajay/Image-Caption-Generator/stargazers)
 [![Ajay Dabas](https://img.shields.io/badge/Ajay-Dabas-ff0000.svg)](https://dabasajay.github.io/)
 
-A neural network to generate captions for an image using Encoder(CNN)-Decoder(RNN) approach with Attention and BEAM Search along with support for using pre-trained word vectors (Word2vec, GloVe) in RNN Embeddings.
+A neural network to generate captions for an image using CNN and RNN with BEAM Search.
 
 <p align="center">
   <strong>Examples</strong>
@@ -75,12 +75,12 @@ Required libraries for Python along with their version numbers used while making
 - **If you're low on memory**, use google colab or reduce batch size
 - In case of BEAM Search, `loss` and `val_loss` are same as in case of argmax since the model is same
 
-| Model & Config | Argmax | BEAM Search | Attention + BEAM Search |
-| :--- | :--- | :--- | :--- |
-| **InceptionV3 + AlternativeRNN** <ul><li>Epochs = 20</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.4050</li><li>val_loss: 3.0527</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.596818</li><li>BLEU-2: 0.356009</li><li>BLEU-3: 0.252489</li><li>BLEU-4: 0.129536</li></ul> |<ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.606086</li><li>BLEU-2: 0.359171</li><li>BLEU-3: 0.249124</li><li>BLEU-4: 0.126599</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
-| **InceptionV3 + RNN** <ul><li>Epochs = 11</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.5254</li><li>val_loss: 3.1769</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.601791</li><li>BLEU-2: 0.344289</li><li>BLEU-3: 0.230025</li><li>BLEU-4: 0.108898</li></ul> |<ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.605097</li><li>BLEU-2: 0.356094</li><li>BLEU-3: 0.251132</li><li>BLEU-4: 0.129900</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
-| **VGG16 + AlternativeRNN** <ul><li>Epochs = 18</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.2880</li><li>val_loss: 3.1889</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.596655</li><li>BLEU-2: 0.342127</li><li>BLEU-3: 0.229676</li><li>BLEU-4: 0.108707</li></ul> | <ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.593876</li><li>BLEU-2: 0.348569</li><li>BLEU-3: 0.242063</li><li>BLEU-4: 0.123221</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
-| **VGG16 + RNN** <ul><li>Epochs = 7</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.6297</li><li>val_loss: 3.3486</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.557626</li><li>BLEU-2: 0.317652</li><li>BLEU-3: 0.216636</li><li>BLEU-4: 0.105288</li></ul> |<ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.568993</li><li>BLEU-2: 0.326569</li><li>BLEU-3: 0.226629</li><li>BLEU-4: 0.113102</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): *TO-DO*</li><li>val_loss: *TO-DO*</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: *TO-DO*</li><li>BLEU-2: *TO-DO*</li><li>BLEU-3: *TO-DO*</li><li>BLEU-4: *TO-DO*</li></ul> |
+| Model & Config | Argmax | BEAM Search |
+| :--- | :--- | :--- |
+| **InceptionV3 + AlternativeRNN** <ul><li>Epochs = 20</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.4050</li><li>val_loss: 3.0527</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.596818</li><li>BLEU-2: 0.356009</li><li>BLEU-3: 0.252489</li><li>BLEU-4: 0.129536</li></ul> |<ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.606086</li><li>BLEU-2: 0.359171</li><li>BLEU-3: 0.249124</li><li>BLEU-4: 0.126599</li></ul> |
+| **InceptionV3 + RNN** <ul><li>Epochs = 11</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.5254</li><li>val_loss: 3.1769</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.601791</li><li>BLEU-2: 0.344289</li><li>BLEU-3: 0.230025</li><li>BLEU-4: 0.108898</li></ul> |<ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.605097</li><li>BLEU-2: 0.356094</li><li>BLEU-3: 0.251132</li><li>BLEU-4: 0.129900</li></ul> |
+| **VGG16 + AlternativeRNN** <ul><li>Epochs = 18</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.2880</li><li>val_loss: 3.1889</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.596655</li><li>BLEU-2: 0.342127</li><li>BLEU-3: 0.229676</li><li>BLEU-4: 0.108707</li></ul> | <ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.593876</li><li>BLEU-2: 0.348569</li><li>BLEU-3: 0.242063</li><li>BLEU-4: 0.123221</li></ul> |
+| **VGG16 + RNN** <ul><li>Epochs = 7</li><li>Batch Size = 64</li><li>Optimizer = Adam</li></ul> |<ul>**Crossentropy loss**<br>*(Lower the better)*<li>loss(train_loss): 2.6297</li><li>val_loss: 3.3486</li>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.557626</li><li>BLEU-2: 0.317652</li><li>BLEU-3: 0.216636</li><li>BLEU-4: 0.105288</li></ul> |<ul>**k = 3**<br><br>**BLEU Scores on Validation data**<br>*(Higher the better)*<li>BLEU-1: 0.568993</li><li>BLEU-2: 0.326569</li><li>BLEU-3: 0.226629</li><li>BLEU-4: 0.113102</li></ul> |
 
 
 ## 3. Generated Captions on Test Images
@@ -89,8 +89,8 @@ Required libraries for Python along with their version numbers used while making
 
 | Image | Caption |
 | :---: | :--- |
-| <img width="50%" src="https://github.com/dabasajay/Image-Caption-Generator/raw/master/test_data/bikestunt.jpg" alt="Image 1"> | <ul><li><strong>Argmax:</strong> A man in a blue shirt is riding a bike on a dirt path.</li><li><strong>BEAM Search, k=3:</strong> A man is riding a bicycle on a dirt path.</li><li><strong>Attention + BEAM Search:</strong> *TO-DO*</li></ul>|
-| <img src="https://github.com/dabasajay/Image-Caption-Generator/raw/master/test_data/surfing.jpeg" alt="Image 2"> | <ul><li><strong>Argmax:</strong> A man in a red kayak is riding down a waterfall.</li><li><strong>BEAM Search, k=3:</strong> A man on a surfboard is riding a wave.</li><li><strong>Attention + BEAM Search:</strong> *TO-DO*</li></ul>|
+| <img width="50%" src="https://github.com/dabasajay/Image-Caption-Generator/raw/master/test_data/bikestunt.jpg" alt="Image 1"> | <ul><li><strong>Argmax:</strong> A man in a blue shirt is riding a bike on a dirt path.</li><li><strong>BEAM Search, k=3:</strong> A man is riding a bicycle on a dirt path.</li></ul>|
+| <img src="https://github.com/dabasajay/Image-Caption-Generator/raw/master/test_data/surfing.jpeg" alt="Image 2"> | <ul><li><strong>Argmax:</strong> A man in a red kayak is riding down a waterfall.</li><li><strong>BEAM Search, k=3:</strong> A man on a surfboard is riding a wave.</li></ul>|
 
 ## 4. Procedure to Train Model
 
@@ -146,17 +146,17 @@ Required libraries for Python along with their version numbers used while making
 
 ## 8. TODO
 
-- [X] Support for VGG16 Model. Uses InceptionV3 Model by default
+- [X] Support for VGG16 Model. Uses InceptionV3 Model by default.
 
-- [X] Support for 2 architectures of RNN (Decoder) Model
+- [X] Implement 2 architectures of RNN Model.
 
-- [X] Support for batch processing in data generator with shuffling
+- [X] Support for batch processing in data generator with shuffling.
 
-- [X] Implement BEAM Search
+- [X] Implement BEAM Search.
 
-- [X] Calculate BLEU Scores using BEAM Search
+- [X] Calculate BLEU Scores using BEAM Search.
 
-- [ ] Implement Attention
+- [ ] Implement Attention and change model architecture.
 
 - [ ] Support for pre-trained word vectors like word2vec, GloVe etc.
 

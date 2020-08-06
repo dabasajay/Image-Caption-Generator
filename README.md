@@ -54,9 +54,9 @@ Required libraries for Python along with their version numbers used while making
 	<li>tqdm - 4.28.1</li>
 </ul>
 
-<strong>Flickr8k Dataset:</strong> <a href="https://forms.illinois.edu/sec/1713398">Dataset Request Form</a>
+**Flickr8k Dataset:** [Dataset Request Form](https://forms.illinois.edu/sec/1713398)
 
-<strong>UPDATE (April/2019):</strong> The official site seems to have been taken down (although the form still works). Here are some direct download links:
+**UPDATE (April/2019):** The official site seems to have been taken down (although the form still works). Here are some direct download links:
 
 <ul type="square">
 	<li><a href="https://github.com/jbrownlee/Datasets/releases/download/Flickr8k/Flickr8k_Dataset.zip">Flickr8k_Dataset</a></li>
@@ -64,7 +64,7 @@ Required libraries for Python along with their version numbers used while making
 	Download Link Credits:<a href="https://machinelearningmastery.com/develop-a-deep-learning-caption-generation-model-in-python/"> Jason Brownlee</a>
 </ul>
 
-<strong>Important:</strong> After downloading the dataset, put the reqired files in train_val_data folder
+**Important:** After downloading the dataset, put the required files in `train_val_data` folder
 
 ## 2. Training parameters and results
 
